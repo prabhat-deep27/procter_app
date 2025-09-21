@@ -1,0 +1,16 @@
+# Dependencies
+/node_modules
+/client/node_modules
+
+# Vite build cache
+.vite/
+/client/.vite/
+
+# Production
+/dist
+/client/dist
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
