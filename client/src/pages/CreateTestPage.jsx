@@ -42,6 +42,11 @@ export default function CreateTestPage() {
             setIsLoading(false);
             return;
         }
+        if (!subject) {
+            alert("Please select a subject.");
+            setIsLoading(false);
+            return;
+        }
         if (questions.length === 0) {
             alert("Please add at least one question.");
             setIsLoading(false);
@@ -168,14 +173,34 @@ export default function CreateTestPage() {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
-                            Subject (Optional)
+                            Subject
                         </label>
-                        <input
-                            type="text"
+                        <select
                             value={subject}
                             onChange={(e) => setSubject(e.target.value)}
                             className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                        />
+                            required
+                        >
+                            <option value="">Select a subject</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Software Development">Software Development</option>
+                            <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+                            <option value="Database Management Systems">Database Management Systems</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Operating Systems">Operating Systems</option>
+                            <option value="AI & ML">AI & ML</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="App Development">App Development</option>
+                            <option value="Cloud Computing & DevOps">Cloud Computing & DevOps</option>
+                            <option value="Blockchain & Cryptocurrency">Blockchain & Cryptocurrency</option>
+                            <option value="Data Science & Big Data Analytics">Data Science & Big Data Analytics</option>
+                            <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+                            <option value="Ethical Hacking">Ethical Hacking</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Science">Science</option>
+                        </select>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

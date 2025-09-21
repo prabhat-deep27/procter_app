@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 // Make sure this path is correct based on your file structure
 import TestLogin from '../pages/TestLogin'; 
 
@@ -21,19 +23,54 @@ const MenuIcon = (props) => (
 const XIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
 );
+const LogOutIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16,17 21,12 16,7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+);
 
 
 // --- Main Student Dashboard Component ---
 const StudentDashboard = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [view, setView] = useState('dashboard'); // Can be 'dashboard' or 'testLogin'
+    const [completedTests, setCompletedTests] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const { user, logout, token } = useAuth();
+    const navigate = useNavigate();
 
-    // Mock data for the list of completed tests
-    const savedTests = [
-        { id: 1, title: "Midterm Exam - Algebra I", code: "TEST-2023-001", date: "2023-05-23", score: "88%" },
-        { id: 2, title: "Chapter 2 Quiz - Biology", code: "TEST-2023-002", date: "2023-06-14", score: "92%" },
-        { id: 3, title: "Final Exam - Chemistry", code: "TEST-2023-004", date: "2023-08-10", score: "76%" },
-    ];
+    // Fetch completed tests on component mount
+    useEffect(() => {
+        const fetchCompletedTests = async () => {
+            if (!token) {
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                setIsLoading(true);
+                const response = await fetch('http://localhost:8080/api/tests/completed', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch completed tests');
+                }
+
+                const tests = await response.json();
+                setCompletedTests(tests);
+            } catch (err) {
+                console.error('Error fetching completed tests:', err);
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchCompletedTests();
+    }, [token]);
 
     // Data for the sidebar navigation links
     const navItems = [
@@ -77,6 +114,12 @@ const StudentDashboard = () => {
         setView('dashboard');
     };
 
+    // Function to handle logout
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
+
     return (
         <div className="flex min-h-screen w-full bg-gray-50 font-sans">
             {/* --- Static Sidebar for Desktop --- */}
@@ -100,22 +143,36 @@ const StudentDashboard = () => {
             <div className="flex flex-1 flex-col">
                 {/* --- Header --- */}
                 <header className="flex h-20 items-center justify-between border-b bg-white px-4 sm:px-6 lg:px-8">
-                    {/* Hamburger menu button for mobile */}
-                    <button
-                        onClick={() => setSidebarOpen(true)}
-                        className="text-gray-600 hover:text-gray-900 lg:hidden"
-                    >
-                        <MenuIcon className="h-6 w-6" />
-                        <span className="sr-only">Open sidebar</span>
-                    </button>
-                    {/* User welcome message and avatar */}
+                    {/* Left side - Hamburger menu button for mobile and user info */}
                     <div className="flex items-center gap-4">
-                        <span className="text-lg font-medium text-gray-700">Welcome, Julia!</span>
-                        <img
-                            src="https://placehold.co/40x40/E2E8F0/4A5568?text=J"
-                            alt="User avatar"
-                            className="h-10 w-10 rounded-full"
-                        />
+                        {/* Hamburger menu button for mobile */}
+                        <button
+                            onClick={() => setSidebarOpen(true)}
+                            className="text-gray-600 hover:text-gray-900 lg:hidden"
+                        >
+                            <MenuIcon className="h-6 w-6" />
+                            <span className="sr-only">Open sidebar</span>
+                        </button>
+                        {/* User welcome message and avatar */}
+                        <div className="flex items-center gap-3">
+                            <span className="text-lg font-medium text-gray-700">Welcome, {user?.username || "Student"}!</span>
+                            <img
+                                src={user?.profilePictureUrl || "https://placehold.co/40x40/E2E8F0/4A5568?text=S"}
+                                alt="User avatar"
+                                className="h-10 w-10 rounded-full"
+                            />
+                        </div>
+                    </div>
+                    
+                    {/* Right side - Logout button */}
+                    <div className="flex items-center">
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors font-medium"
+                        >
+                            <LogOutIcon className="h-4 w-4" />
+                            Logout
+                        </button>
                     </div>
                 </header>
 
@@ -143,22 +200,41 @@ const StudentDashboard = () => {
                                 {/* --- Completed Tests Section --- */}
                                 <div className="rounded-xl border bg-white p-6 shadow-sm">
                                     <h2 className="mb-4 text-xl font-semibold text-gray-800">Completed Tests</h2>
-                                    <div className="space-y-4">
-                                        {savedTests.map((test) => (
-                                            <div key={test.id} className="flex flex-wrap items-center justify-between gap-4 rounded-lg border bg-gray-50 p-4">
-                                                <div>
-                                                    <h3 className="font-semibold text-gray-900">{test.title}</h3>
-                                                    <p className="text-sm text-gray-500">{test.code} | Completed on: {test.date}</p>
+                                    
+                                    {isLoading ? (
+                                        <div className="flex items-center justify-center py-8">
+                                            <div className="text-gray-500">Loading completed tests...</div>
+                                        </div>
+                                    ) : error ? (
+                                        <div className="flex items-center justify-center py-8">
+                                            <div className="text-red-500">Error loading tests: {error}</div>
+                                        </div>
+                                    ) : completedTests.length === 0 ? (
+                                        <div className="flex items-center justify-center py-8">
+                                            <div className="text-gray-500">No completed tests yet. Complete a test to see your results here.</div>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {completedTests.map((test) => (
+                                                <div key={test.id} className="flex flex-wrap items-center justify-between gap-4 rounded-lg border bg-gray-50 p-4">
+                                                    <div>
+                                                        <h3 className="font-semibold text-gray-900">{test.testTitle}</h3>
+                                                        <p className="text-sm text-gray-500">
+                                                            {test.joinCode} | {test.subject} | Completed on: {new Date(test.completedAt).toLocaleDateString()}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="font-bold text-lg text-purple-700">
+                                                            {test.score}%
+                                                        </span>
+                                                        <button className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                                            Review
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="font-bold text-lg text-purple-700">{test.score}</span>
-                                                    <button className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                                        Review
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

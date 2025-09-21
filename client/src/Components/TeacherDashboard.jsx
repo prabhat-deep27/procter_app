@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom"; 
+import { Outlet, useNavigate } from "react-router-dom"; 
 import { useAuth } from "../context/AuthContext"; 
 import Sidebar from "./Sidebar";
 import TestCard from "./TestCard";
@@ -7,7 +7,8 @@ import SavedTestsPage from "../pages/SavedTestsPage";
 
 export default function TeacherDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useAuth(); // 2. Get user from context
+  const { user, logout } = useAuth(); // 2. Get user and logout from context
+  const navigate = useNavigate();
 
   // 3. The useEffect hook is no longer needed
   // useEffect(() => {
@@ -19,6 +20,11 @@ export default function TeacherDashboard() {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -46,6 +52,12 @@ export default function TeacherDashboard() {
               alt="Profile"
               className="w-10 h-10 rounded-full border border-gray-300"
             />
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors font-medium"
+            >
+              Logout
+            </button>
           </div>
         </div>
         <div className="flex flex-col lg:flex-row flex-1 p-4 lg:p-8 gap-8">

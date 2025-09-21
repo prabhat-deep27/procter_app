@@ -16,8 +16,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 // Your existing project-specific imports
 import com.procter.procter_app.dto.CreateTestRequest;
 import com.procter.procter_app.model.Test;
+import com.procter.procter_app.model.TestAttempt;
 import com.procter.procter_app.model.User;
 import com.procter.procter_app.repo.TestRepository;
+import com.procter.procter_app.repo.TestAttemptRepository;
 import jakarta.validation.constraints.NotBlank;
 
 // Other standard Java imports
@@ -33,11 +35,13 @@ import java.util.Optional;
 public class TestController {
 
     private final TestRepository testRepository;
+    private final TestAttemptRepository testAttemptRepository;
     private final SimpMessagingTemplate messagingTemplate;
     private final SecureRandom random = new SecureRandom();
 
-    public TestController(TestRepository testRepository, SimpMessagingTemplate messagingTemplate) {
+    public TestController(TestRepository testRepository, TestAttemptRepository testAttemptRepository, SimpMessagingTemplate messagingTemplate) {
         this.testRepository = testRepository;
+        this.testAttemptRepository = testAttemptRepository;
         this.messagingTemplate = messagingTemplate;
     }
 
@@ -138,5 +142,11 @@ public class TestController {
         return ResponseEntity.ok(tests);
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/completed")
+    public ResponseEntity<List<TestAttempt>> getStudentCompletedTests(@AuthenticationPrincipal User student) {
+        List<TestAttempt> completedTests = testAttemptRepository.findByStudentIdAndIsCompletedTrueOrderByCompletedAtDesc(student.getId());
+        return ResponseEntity.ok(completedTests);
+    }
 
 }
