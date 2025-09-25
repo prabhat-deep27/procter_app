@@ -12,6 +12,7 @@ import Profile from "./pages/Profile.jsx";
 import Subjects from "./pages/Subjects.jsx";
 import SubjectDetail from "./pages/SubjectDetail.jsx";
 import SavedTestsPage from "./pages/SavedTestsPage.jsx";
+import TestAttemptPage from "./pages/TestAttemptPage.jsx";
 
 
 createRoot(document.getElementById("root")).render(
@@ -34,6 +35,7 @@ createRoot(document.getElementById("root")).render(
 
           {/* Student Routes */}
           <Route path="/student" element={<StudentDashboard />} />
+          <Route path="/student/test/:testId" element={<TestAttemptPage />} />
 
           {/* Optional: 404 Page */}
           {/* <Route path="*" element={<NotFound />} /> */}
