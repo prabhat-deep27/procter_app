@@ -76,8 +76,8 @@ const StudentDashboard = () => {
     const navItems = [
         { name: "Home", icon: HomeIcon },
         { name: "Profile", icon: UserCircleIcon },
-        { name: "Subjects", icon: BookOpenIcon },
-        { name: "Test Review", icon: FileTextIcon },
+        { name: "My Courses", icon: BookOpenIcon },
+        { name: "Results", icon: FileTextIcon },
     ];
 
     // Reusable Sidebar component
