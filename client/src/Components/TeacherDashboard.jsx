@@ -4,6 +4,43 @@ import { useAuth } from "../context/AuthContext";
 import Sidebar from "./Sidebar";
 import TestCard from "./TestCard";
 import SavedTestsPage from "../pages/SavedTestsPage";
+import { useEffect } from "react";
+import { createStompClient, subscribeToTestEvents } from "../lib/stompClient";
+
+function ProctoringPanel() {
+  const [events, setEvents] = useState([]);
+  const [testId, setTestId] = useState("");
+  useEffect(() => {
+    if (!testId) return;
+    const client = createStompClient();
+    client.onConnect = () => {
+      subscribeToTestEvents(client, testId, (evt) => {
+        setEvents((prev) => [evt, ...prev].slice(0, 200));
+      });
+    };
+    client.activate();
+    return () => client.deactivate();
+  }, [testId]);
+  return (
+    <div className="rounded-xl border bg-white p-4">
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          placeholder="Enter Test ID to monitor"
+          value={testId}
+          onChange={(e) => setTestId(e.target.value)}
+          className="border px-3 py-2 rounded w-full"
+        />
+      </div>
+      <div className="h-80 overflow-auto space-y-2">
+        {events.map((e, idx) => (
+          <div key={idx} className="text-sm text-gray-800 border-b pb-2">
+            <span className="font-semibold">{e.type}</span>: {JSON.stringify(e)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function TeacherDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,6 +103,9 @@ export default function TeacherDashboard() {
           </div>
           <div className="flex-1">
             <SavedTestsPage />
+            <div className="mt-6">
+              <ProctoringPanel />
+            </div>
           </div>
         </div>
       </div>

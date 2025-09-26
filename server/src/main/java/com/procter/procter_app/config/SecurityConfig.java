@@ -49,6 +49,12 @@ public class SecurityConfig {
                         // This rule for students remains the same
                         .requestMatchers(HttpMethod.POST, "/api/tests/join/**").hasRole("STUDENT")
 
+                        // Submit attempt endpoint (student only)
+                        .requestMatchers(HttpMethod.POST, "/api/tests/*/submit").hasRole("STUDENT")
+
+                        // Completed attempts listing (student only)
+                        .requestMatchers(HttpMethod.GET, "/api/tests/completed").hasRole("STUDENT")
+
                         // Everything else requires authentication
                         .anyRequest().authenticated()
                 )

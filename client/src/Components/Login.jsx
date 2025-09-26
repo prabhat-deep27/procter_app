@@ -51,15 +51,13 @@ function LoginForm() {
         // --- THIS IS THE KEY CHANGE ---
         // Save the JWT to local storage and user data to context
         if (token) {
-            localStorage.setItem("bearerToken", token);
-            
-            // Store user data in auth context
+            // Store user data and token in auth context
             login({
               username,
               email: userEmail,
               role,
               profilePictureUrl
-            });
+            }, token);
             
             setSuccess("Login successful!");
             console.log("Login successful with role:", role);

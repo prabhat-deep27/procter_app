@@ -131,6 +131,87 @@ public class TestController {
         random.nextBytes(buf);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(buf);
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/{id}/submit")
+    public ResponseEntity<?> submitAttempt(@PathVariable("id") String id,
+                                           @AuthenticationPrincipal User student,
+                                           @RequestBody com.procter.procter_app.dto.SubmitAttemptRequest request) {
+        Optional<Test> testOptional = testRepository.findById(id);
+        if (testOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Test not found"));
+        }
+        Test test = testOptional.get();
+
+        // Build attempt and compute simple score
+        TestAttempt attempt = new TestAttempt();
+        attempt.setTestId(test.getId());
+        attempt.setStudentId(student.getId());
+        attempt.setTestTitle(test.getTitle());
+        attempt.setSubject(test.getSubject());
+        attempt.setJoinCode(test.getJoinCode());
+        attempt.setDurationInMinutes(request.getDurationInMinutes() != null ? request.getDurationInMinutes() : test.getDurationInMinutes());
+
+        int total = test.getQuestions() != null ? test.getQuestions().size() : 0;
+        int correct = 0;
+
+        // Normalize answers into list indexed by question
+        java.util.List<?> answers = request.getAnswers();
+        java.util.List<java.util.Map<String, Object>> storedAnswers = new java.util.ArrayList<>();
+
+        for (int i = 0; i < total; i++) {
+            com.procter.procter_app.model.Question q = test.getQuestions().get(i);
+            Object ans = (answers != null && i < answers.size()) ? answers.get(i) : null;
+            boolean isCorrect = false;
+
+            if (q.getOptions() != null && !q.getOptions().isEmpty()) {
+                // choice based
+                java.util.List<Integer> correctIdx = q.getCorrectAnswer();
+                if (ans instanceof Number) {
+                    isCorrect = correctIdx != null && correctIdx.size() == 1 && correctIdx.get(0).equals(((Number) ans).intValue());
+                } else if (ans instanceof java.util.List<?>) {
+                    try {
+                        java.util.List<Integer> selected = new java.util.ArrayList<>();
+                        for (Object o : (java.util.List<?>) ans) selected.add(((Number) o).intValue());
+                        java.util.List<Integer> aSorted = new java.util.ArrayList<>(selected);
+                        java.util.Collections.sort(aSorted);
+                        java.util.List<Integer> cSorted = new java.util.ArrayList<>(correctIdx != null ? correctIdx : java.util.List.of());
+                        java.util.Collections.sort(cSorted);
+                        isCorrect = aSorted.equals(cSorted);
+                    } catch (Exception ignore) { isCorrect = false; }
+                }
+            } else {
+                // text based; not auto-graded
+                isCorrect = false;
+            }
+
+            if (isCorrect) correct++;
+
+            java.util.Map<String, Object> entry = new java.util.HashMap<>();
+            entry.put("questionIndex", i);
+            entry.put("answer", ans);
+            entry.put("isCorrect", isCorrect);
+            storedAnswers.add(entry);
+        }
+
+        attempt.setTotalQuestions(total);
+        attempt.setCorrectAnswers(correct);
+        attempt.setScore(total > 0 ? Math.round((correct * 100.0f) / total) : 0);
+        attempt.setAnswers(storedAnswers);
+        attempt.setCompleted(true);
+        attempt.setCompletedAt(java.time.Instant.now());
+
+        TestAttempt saved = testAttemptRepository.save(attempt);
+        messagingTemplate.convertAndSend("/topic/test/" + test.getId() + "/events",
+                Map.of("type", "SUBMITTED", "studentId", student.getId(), "attemptId", saved.getId(), "timestamp", java.time.Instant.now().toString()));
+
+        return ResponseEntity.ok(Map.of(
+                "attemptId", saved.getId(),
+                "score", saved.getScore(),
+                "correct", saved.getCorrectAnswers(),
+                "total", saved.getTotalQuestions()
+        ));
+    }
     @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER')")
     @GetMapping("/subject/{subject}")
     public ResponseEntity<List<Test>> getUserTestsBySubject(

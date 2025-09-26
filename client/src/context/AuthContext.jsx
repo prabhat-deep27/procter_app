@@ -27,9 +27,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (userData) => {
+  const login = (userData, jwtToken) => {
     setUser(userData);
     localStorage.setItem("userData", JSON.stringify(userData));
+    if (jwtToken) {
+      setToken(jwtToken);
+      localStorage.setItem("bearerToken", jwtToken);
+    }
   };
 
   const logout = () => {

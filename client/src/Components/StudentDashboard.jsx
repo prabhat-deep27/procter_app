@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 // Make sure this path is correct based on your file structure
 import TestLogin from '../pages/TestLogin'; 
@@ -37,6 +37,8 @@ const StudentDashboard = () => {
     const [error, setError] = useState(null);
     const { user, logout, token } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const [toast, setToast] = useState(null);
 
     // Fetch completed tests on component mount
     useEffect(() => {
@@ -71,6 +73,36 @@ const StudentDashboard = () => {
 
         fetchCompletedTests();
     }, [token]);
+
+    // On return from attempt page, show toast and force refresh
+    useEffect(() => {
+        if (location.state?.testSubmitted) {
+            setToast({
+                message: `Test submitted successfully. Score: ${location.state.score}% (${location.state.correct}/${location.state.total}).`,
+            });
+            // Force refresh list
+            (async () => {
+                try {
+                    setIsLoading(true);
+                    const response = await fetch('http://localhost:8080/api/tests/completed', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (response.ok) {
+                        const tests = await response.json();
+                        setCompletedTests(tests);
+                    }
+                } catch (_) {}
+                finally { setIsLoading(false); }
+            })();
+            // Clear state so refresh doesn't reshow toast on next visit
+            window.history.replaceState({}, document.title, window.location.pathname);
+            const t = setTimeout(() => setToast(null), 3000);
+            return () => clearTimeout(t);
+        }
+    }, [location.state, token]);
 
     // Data for the sidebar navigation links
     const navItems = [
@@ -178,6 +210,11 @@ const StudentDashboard = () => {
 
                 {/* --- Page Content --- */}
                 <main className="flex-1 p-4 sm:p-6 lg:p-8">
+                    {toast && (
+                        <div className="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                            {toast.message}
+                        </div>
+                    )}
                     {/* --- Conditional Rendering based on 'view' state --- */}
                     {view === 'dashboard' && (
                         <div className="mx-auto max-w-4xl">
