@@ -101,9 +101,9 @@ export default function ProfilePage() {
         console.log("Profile: Profile picture file attached");
       }
 
-      console.log("Profile: Making API request to http://localhost:8080/api/users/profile");
+      console.log("Profile: Making API request to /api/users/profile");
       
-      const response = await fetch("http://localhost:8080/api/users/profile", {
+      const response = await fetch("/api/users/profile", {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,

@@ -39,19 +39,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         Authentication existing = SecurityContextHolder.getContext().getAuthentication();
 
         String header = request.getHeader("Authorization");
+        System.out.println("JwtAuthFilter - Authorization header: " + header);
         if (existing == null && StringUtils.hasText(header) && header.startsWith("Bearer ")) {
             String token = header.substring(7);
+            System.out.println("JwtAuthFilter - Token: " + token.substring(0, Math.min(20, token.length())) + "...");
             try {
                 Jws<Claims> jws = jwtService.parse(token);
                 String email = jws.getBody().getSubject();
+                System.out.println("JwtAuthFilter - Parsed email: " + email);
 
                 Optional<User> userOpt = userRepository.findByEmail(email);
                 if (userOpt.isPresent()) {
                     User user = userOpt.get();
+                    System.out.println("JwtAuthFilter - User found: " + user.getEmail() + " Role: " + user.getRole());
 
                     // Build authorities with ROLE_ prefix
                     SimpleGrantedAuthority authority =
                             new SimpleGrantedAuthority("ROLE_" + user.getRole().name());
+                    System.out.println("JwtAuthFilter - Authority: " + authority.getAuthority());
 
                     AbstractAuthenticationToken authentication =
                             new AbstractAuthenticationToken(List.of(authority)) {
@@ -68,11 +73,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authentication.setAuthenticated(true);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                    System.out.println("JwtAuthFilter - Authentication set successfully");
+                } else {
+                    System.out.println("JwtAuthFilter - User not found for email: " + email);
                 }
             } catch (Exception e) {
-                // Optional: log at debug level, do not break the chain on token issues
-                // logger.debug("JWT parsing/validation failed", e);
+                System.out.println("JwtAuthFilter - JWT parsing failed: " + e.getMessage());
+                e.printStackTrace();
             }
+        } else {
+            System.out.println("JwtAuthFilter - No valid Authorization header found");
         }
 
         chain.doFilter(request, response);

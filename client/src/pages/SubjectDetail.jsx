@@ -31,7 +31,7 @@ export default function SubjectDetail() {
       
       console.log('SubjectDetail: Fetching tests for subject:', decodedSubjectName);
       
-      const response = await fetch(`http://localhost:8080/api/tests/subject/${encodeURIComponent(decodedSubjectName)}`, {
+      const response = await fetch(`/api/tests/subject/${encodeURIComponent(decodedSubjectName)}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

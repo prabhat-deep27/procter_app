@@ -65,7 +65,7 @@ export default function CreateTestPage() {
         console.log("Token being used:", token); // Add this debug line
 
         try {
-            const response = await fetch("http://localhost:8080/api/tests", {
+            const response = await fetch("/api/tests", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -35,7 +35,7 @@ export default function SubjectsPage() {
   // Function to fetch test count for a specific subject
   const fetchTestCountForSubject = async (subjectName) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tests/subject/${encodeURIComponent(subjectName)}`, {
+      const response = await fetch(`/api/tests/subject/${encodeURIComponent(subjectName)}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

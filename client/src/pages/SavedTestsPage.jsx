@@ -25,8 +25,8 @@ export default function SavedTestsPage() {
         setLoading(true);
         setError(null);
         
-        console.log('SavedTestsPage: Making API request to http://localhost:8080/api/tests');
-        const response = await fetch('http://localhost:8080/api/tests', {
+        console.log('SavedTestsPage: Making API request to /api/tests');
+        const response = await fetch('/api/tests', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -137,11 +137,33 @@ public class TestController {
     public ResponseEntity<?> submitAttempt(@PathVariable("id") String id,
                                            @AuthenticationPrincipal User student,
                                            @RequestBody com.procter.procter_app.dto.SubmitAttemptRequest request) {
+        
+        // Debug logging
+        System.out.println("Submit attempt called for test ID: " + id);
+        System.out.println("Student: " + (student != null ? student.getEmail() + " (Role: " + student.getRole() + ")" : "null"));
+        System.out.println("Request answers: " + request.getAnswers());
+        
         Optional<Test> testOptional = testRepository.findById(id);
         if (testOptional.isEmpty()) {
+            System.out.println("Test not found with ID: " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Test not found"));
         }
         Test test = testOptional.get();
+        System.out.println("Test found: " + test.getTitle());
+        
+        // Check if user is a participant in the test
+        boolean isCreator = test.getCreatedByTeacherId().equals(student.getId());
+        boolean isParticipant = test.getParticipantIds().contains(student.getId());
+        
+        if (!isCreator && !isParticipant) {
+            System.out.println("User is not a participant in the test, auto-adding them...");
+            // Auto-add the user as a participant
+            test.getParticipantIds().add(student.getId());
+            testRepository.save(test);
+            System.out.println("User added as participant");
+        }
+        
+        System.out.println("User is authorized to submit the test");
 
         // Build attempt and compute simple score
         TestAttempt attempt = new TestAttempt();

@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 // Make sure this path is correct based on your file structure
 import TestLogin from '../pages/TestLogin'; 
+import StudentProfile from './StudentProfile';
+import StudentCourses from './StudentCourses'; 
 
 // --- Icon Components ---
 const HomeIcon = (props) => (
@@ -31,7 +33,7 @@ const LogOutIcon = (props) => (
 // --- Main Student Dashboard Component ---
 const StudentDashboard = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const [view, setView] = useState('dashboard'); // Can be 'dashboard' or 'testLogin'
+    const [view, setView] = useState('dashboard'); // Can be 'dashboard', 'testLogin', 'profile', or 'courses'
     const [completedTests, setCompletedTests] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -50,7 +52,7 @@ const StudentDashboard = () => {
 
             try {
                 setIsLoading(true);
-                const response = await fetch('http://localhost:8080/api/tests/completed', {
+                const response = await fetch('/api/tests/completed', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ const StudentDashboard = () => {
             (async () => {
                 try {
                     setIsLoading(true);
-                    const response = await fetch('http://localhost:8080/api/tests/completed', {
+                    const response = await fetch('/api/tests/completed', {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json',
@@ -123,14 +125,25 @@ const StudentDashboard = () => {
             </div>
             <nav className="flex-1 space-y-2 px-4">
                 {navItems.map((item) => (
-                    <a
+                    <button
                         key={item.name}
-                        href="#"
-                        className="flex items-center gap-4 rounded-lg px-4 py-3 text-purple-200 transition-colors hover:bg-white/10 hover:text-white"
+                        onClick={() => {
+                            if (item.name === 'Home') setView('dashboard');
+                            else if (item.name === 'Profile') setView('profile');
+                            else if (item.name === 'My Courses') setView('courses');
+                            else if (item.name === 'Results') setView('dashboard');
+                        }}
+                        className={`flex items-center gap-4 rounded-lg px-4 py-3 text-purple-200 transition-colors hover:bg-white/10 hover:text-white w-full text-left ${
+                            (item.name === 'Home' && view === 'dashboard') ||
+                            (item.name === 'Profile' && view === 'profile') ||
+                            (item.name === 'My Courses' && view === 'courses')
+                                ? 'bg-white/20 text-white' 
+                                : ''
+                        }`}
                     >
                         <item.icon className="h-5 w-5" />
                         <span className="font-medium">{item.name}</span>
-                    </a>
+                    </button>
                 ))}
             </nav>
         </div>
@@ -275,6 +288,16 @@ const StudentDashboard = () => {
                                 </div>
                             </div>
                         </div>
+                    )}
+
+                    {/* Show the Profile component when view is 'profile' */}
+                    {view === 'profile' && (
+                        <StudentProfile onBack={() => setView('dashboard')} />
+                    )}
+
+                    {/* Show the Courses component when view is 'courses' */}
+                    {view === 'courses' && (
+                        <StudentCourses onBack={() => setView('dashboard')} />
                     )}
 
                     {/* Show the TestLogin component when view is 'testLogin' */}
