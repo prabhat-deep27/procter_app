@@ -28,6 +28,9 @@ const XIcon = (props) => (
 const LogOutIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16,17 21,12 16,7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
 );
+const AnalyticsIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M3 3v18h18" /><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" /></svg>
+);
 
 
 // --- Main Student Dashboard Component ---
@@ -112,6 +115,7 @@ const StudentDashboard = () => {
         { name: "Profile", icon: UserCircleIcon },
         { name: "My Courses", icon: BookOpenIcon },
         { name: "Results", icon: FileTextIcon },
+        { name: "Analytics", icon: AnalyticsIcon },
     ];
 
     // Reusable Sidebar component
@@ -132,6 +136,7 @@ const StudentDashboard = () => {
                             else if (item.name === 'Profile') setView('profile');
                             else if (item.name === 'My Courses') setView('courses');
                             else if (item.name === 'Results') setView('dashboard');
+                            else if (item.name === 'Analytics') navigate('/student/analytics');
                         }}
                         className={`flex items-center gap-4 rounded-lg px-4 py-3 text-purple-200 transition-colors hover:bg-white/10 hover:text-white w-full text-left ${
                             (item.name === 'Home' && view === 'dashboard') ||

@@ -97,16 +97,8 @@ export default function TeacherDashboard() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row flex-1 p-4 lg:p-8 gap-8">
-          <div className="lg:flex-shrink-0">
-            <TestCard />
-          </div>
-          <div className="flex-1">
-            <SavedTestsPage />
-            <div className="mt-6">
-              <ProctoringPanel />
-            </div>
-          </div>
+        <div className="flex-1">
+          <Outlet />
         </div>
       </div>
     </div>

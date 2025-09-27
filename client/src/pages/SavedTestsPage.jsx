@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function SavedTestsPage() {
   const { token } = useAuth();
+  const navigate = useNavigate();
   const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -163,15 +164,25 @@ export default function SavedTestsPage() {
               </div>
               
               <div className="mt-3 pt-3 border-t border-gray-100">
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded hover:bg-blue-200 transition">
-                    View Details
+                <div className="flex gap-2 flex-wrap">
+                  <button 
+                    onClick={() => navigate(`/teacher/test-review/${test.id}`)}
+                    className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded hover:bg-blue-200 transition flex items-center space-x-1"
+                  >
+                    <span>📊</span>
+                    <span>Review Results</span>
                   </button>
-                  <button className="px-3 py-1 bg-green-100 text-green-700 text-xs rounded hover:bg-green-200 transition">
-                    Share Join Code
+                  <button className="px-3 py-1 bg-green-100 text-green-700 text-xs rounded hover:bg-green-200 transition flex items-center space-x-1">
+                    <span>🔗</span>
+                    <span>Share Join Code</span>
                   </button>
-                  <button className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded hover:bg-purple-200 transition">
-                    Edit Test
+                  <button className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded hover:bg-purple-200 transition flex items-center space-x-1">
+                    <span>✏️</span>
+                    <span>Edit Test</span>
+                  </button>
+                  <button className="px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded hover:bg-orange-200 transition flex items-center space-x-1">
+                    <span>👥</span>
+                    <span>View Participants</span>
                   </button>
                 </div>
               </div>

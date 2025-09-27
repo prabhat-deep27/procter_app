@@ -13,6 +13,10 @@ import Subjects from "./pages/Subjects.jsx";
 import SubjectDetail from "./pages/SubjectDetail.jsx";
 import SavedTestsPage from "./pages/SavedTestsPage.jsx";
 import TestAttemptPage from "./pages/TestAttemptPage.jsx";
+import TestReviewPage from "./pages/TestReviewPage.jsx";
+import TeacherTestReviewPage from "./pages/TeacherTestReviewPage.jsx";
+import TeacherHomePage from "./pages/TeacherHomePage.jsx";
+import StudentAnalyticsPage from "./pages/StudentAnalyticsPage.jsx";
 
 
 createRoot(document.getElementById("root")).render(
@@ -25,17 +29,21 @@ createRoot(document.getElementById("root")).render(
           <Route path="/" element={<App />} />
 
           {/* Teacher Routes */}
-          <Route path="/teacher" element={<TeacherDashboard />} />
-          <Route path="/teacher/create-test" element={<CreateTestPage />} />
-          <Route path="/teacher/saved-tests" element={<SavedTestsPage />} />
-          {/* Corrected Profile Route */}
-          <Route path="/teacher/profile" element={<Profile />} />
-          <Route path="/teacher/subjects" element={<Subjects />} />
-          <Route path="/teacher/subjects/:subjectName" element={<SubjectDetail />} />
+          <Route path="/teacher" element={<TeacherDashboard />}>
+            <Route index element={<TeacherHomePage />} />
+            <Route path="create-test" element={<CreateTestPage />} />
+            <Route path="saved-tests" element={<SavedTestsPage />} />
+            <Route path="review" element={<TeacherTestReviewPage />} />
+            <Route path="test-review/:testId" element={<TestReviewPage />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="subjects" element={<Subjects />} />
+            <Route path="subjects/:subjectName" element={<SubjectDetail />} />
+          </Route>
 
           {/* Student Routes */}
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/student/test/:testId" element={<TestAttemptPage />} />
+          <Route path="/student/analytics" element={<StudentAnalyticsPage />} />
 
           {/* Optional: 404 Page */}
           {/* <Route path="*" element={<NotFound />} /> */}

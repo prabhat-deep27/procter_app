@@ -11,4 +11,5 @@ public interface TestAttemptRepository extends MongoRepository<TestAttempt, Stri
     List<TestAttempt> findByStudentIdAndIsCompletedTrueOrderByCompletedAtDesc(String studentId);
     List<TestAttempt> findByTestIdAndStudentId(String testId, String studentId);
     boolean existsByTestIdAndStudentIdAndIsCompletedTrue(String testId, String studentId);
+    List<TestAttempt> findByTestId(String testId);
 }
