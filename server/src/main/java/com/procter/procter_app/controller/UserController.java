@@ -1,7 +1,5 @@
 package com.procter.procter_app.controller;
 
-
-
 import com.procter.procter_app.model.User;
 import com.procter.procter_app.service.CloudinaryService;
 import com.procter.procter_app.dto.UpdateProfileRequest;
@@ -26,9 +24,13 @@ public class UserController {
         this.cloudinaryService = cloudinaryService;
     }
 
+    /**
+     * Handles profile updates for users with the 'STUDENT' role.
+     * The frontend should continue to call PUT /api/users/profile for students.
+     */
     @PutMapping("/profile")
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseEntity<?> updateProfile(
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseEntity<?> updateStudentProfile(
             @AuthenticationPrincipal User currentUser,
             @RequestPart("profileData") UpdateProfileRequest profileData,
             @RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture) {
@@ -36,18 +38,44 @@ public class UserController {
         String imageUrl = null;
         if (profilePicture != null && !profilePicture.isEmpty()) {
             try {
-                // Upload the image to Cloudinary and get its secure URL
                 imageUrl = cloudinaryService.uploadFile(profilePicture);
             } catch (IOException e) {
-                // In a real app, you should log this exception
+                // Log the exception properly in a real application
                 e.printStackTrace();
                 return ResponseEntity.internalServerError().body("Error uploading profile picture.");
             }
         }
 
-        // Call the service to update the user's profile in the database
+        // Call a service method specifically for updating a student's profile
+        return userService.updateStudentProfile(currentUser.getId(), profileData, imageUrl)
+                .map(updatedUser -> ResponseEntity.ok().body("Profile updated successfully for student: " + updatedUser.getUsername()))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Handles profile updates for users with the 'TEACHER' role.
+     * Note the new, more specific path to avoid conflicts.
+     */
+    @PutMapping("/teacher/profile")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseEntity<?> updateTeacherProfile(
+            @AuthenticationPrincipal User currentUser,
+            @RequestPart("profileData") UpdateProfileRequest profileData,
+            @RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture) {
+
+        String imageUrl = null;
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            try {
+                imageUrl = cloudinaryService.uploadFile(profilePicture);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.internalServerError().body("Error uploading profile picture.");
+            }
+        }
+
+        // Call the existing service method for updating a teacher's profile
         return userService.updateTeacherProfile(currentUser.getId(), profileData, imageUrl)
-                .map(updatedUser -> ResponseEntity.ok().body("Profile updated successfully for user: " + updatedUser.getUsername()))
+                .map(updatedUser -> ResponseEntity.ok().body("Profile updated successfully for teacher: " + updatedUser.getUsername()))
                 .orElse(ResponseEntity.notFound().build());
     }
 }

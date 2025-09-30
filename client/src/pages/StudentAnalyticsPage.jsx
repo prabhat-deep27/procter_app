@@ -18,7 +18,7 @@ const StudentAnalyticsPage = () => {
   const fetchAnalytics = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('bearerToken'); // <-- FIX: Changed 'token' to 'bearerToken'
       const params = new URLSearchParams();
       if (selectedSubject) params.append('subject', selectedSubject);
       if (selectedTimeRange) params.append('timeRange', selectedTimeRange);
