@@ -10,6 +10,7 @@ import java.util.List;
 public interface TestAttemptRepository extends MongoRepository<TestAttempt, String> {
     List<TestAttempt> findByStudentIdAndIsCompletedTrueOrderByCompletedAtDesc(String studentId);
     List<TestAttempt> findByTestIdAndStudentId(String testId, String studentId);
+    List<TestAttempt> findByStudentId(String studentId);
     boolean existsByTestIdAndStudentIdAndIsCompletedTrue(String testId, String studentId);
     List<TestAttempt> findByTestId(String testId);
 }

@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .logout(l -> l.disable())
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
-                        .requestMatchers("/api/auth/register", "/api/auth/login", "/ws/**").permitAll()
+                        .requestMatchers("/api/auth/register", "/api/auth/login", "/ws/**", "/api/student/debug").permitAll()
 
                         // Preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -54,6 +54,9 @@ public class SecurityConfig {
 
                         // Completed attempts listing (student only)
                         .requestMatchers(HttpMethod.GET, "/api/tests/completed").hasRole("STUDENT")
+
+                        // Student test review endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/student/**").hasRole("STUDENT")
 
                         // Everything else requires authentication
                         .anyRequest().authenticated()

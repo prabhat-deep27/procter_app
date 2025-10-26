@@ -17,6 +17,7 @@ import TestReviewPage from "./pages/TestReviewPage.jsx";
 import TeacherTestReviewPage from "./pages/TeacherTestReviewPage.jsx";
 import TeacherHomePage from "./pages/TeacherHomePage.jsx";
 import StudentAnalyticsPage from "./pages/StudentAnalyticsPage.jsx";
+import StudentTestReviewPage from "./pages/StudentTestReviewPage.jsx";
 
 
 createRoot(document.getElementById("root")).render(
@@ -43,6 +44,7 @@ createRoot(document.getElementById("root")).render(
           {/* Student Routes */}
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/student/test/:testId" element={<TestAttemptPage />} />
+          <Route path="/student/test/:testId/review" element={<StudentTestReviewPage />} />
           <Route path="/student/analytics" element={<StudentAnalyticsPage />} />
 
           {/* Optional: 404 Page */}
