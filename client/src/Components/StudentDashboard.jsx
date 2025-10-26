@@ -15,9 +15,6 @@ const UserCircleIcon = (props) => (
 const BookOpenIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
 );
-const FileTextIcon = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="16" x2="8" y1="13" y2="13" /><line x1="16" x2="8" y1="17" y2="17" /><line x1="10" x2="8" y1="9" y2="9" /></svg>
-);
 const MenuIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
 );
@@ -106,7 +103,7 @@ const StudentDashboard = () => {
     { name: "Home", icon: HomeIcon },
     { name: "Profile", icon: UserCircleIcon },
     { name: "My Courses", icon: BookOpenIcon },
-    { name: "Results", icon: FileTextIcon },
+    // "Results" item has been removed
     { name: "Analytics", icon: AnalyticsIcon },
   ];
 
@@ -126,7 +123,7 @@ const StudentDashboard = () => {
               if (item.name === 'Home') setView('dashboard');
               else if (item.name === 'Profile') setView('profile');
               else if (item.name === 'My Courses') setView('courses');
-              else if (item.name === 'Results') setView('dashboard');
+              // "Results" logic has been removed
               else if (item.name === 'Analytics') navigate('/student/analytics');
             }}
             className={`flex items-center gap-4 rounded-lg px-4 py-3 text-purple-200 transition-colors hover:bg-white/10 hover:text-white w-full text-left ${

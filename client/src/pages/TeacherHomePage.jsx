@@ -2,16 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '../Components/ui/card';
 import { Button } from '../Components/ui/button';
-import TestCard from '../Components/TestCard';
+// We are replacing TestCard, so we can remove this import if it's not used elsewhere.
+// import TestCard from '../Components/TestCard'; 
 import ProctoringPanel from '../Components/ProctoringPanel';
 
 const TeacherHomePage = () => {
 
   return (
     <div className="flex flex-col lg:flex-row flex-1 p-4 lg:p-8 gap-8">
+      {/* --- EDITED SECTION STARTS HERE --- */}
       <div className="lg:flex-shrink-0">
-        <TestCard />
+        {/* This Card replaces the old <TestCard /> component */}
+        <Card className="p-6 flex flex-col items-start gap-4 bg-white w-full lg:w-80">
+          <h3 className="text-xl font-semibold text-gray-800">Create New Test</h3>
+          <p className="text-gray-500">Write a new test: Biology and others</p>
+          
+          {/* This is the new button you wanted to add */}
+          <Link to="/teacher/create-test" className="w-full mt-4">
+            <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3">
+              + Create New Test
+            </Button>
+          </Link>
+        </Card>
       </div>
+      {/* --- EDITED SECTION ENDS HERE --- */}
+
       <div className="flex-1 space-y-6">
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
