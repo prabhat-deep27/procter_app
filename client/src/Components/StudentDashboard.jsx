@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { Moon, Sun } from 'lucide-react';
 import TestLogin from '../pages/TestLogin';
 import StudentProfile from './StudentProfile';
 import StudentCourses from './StudentCourses';
@@ -36,6 +38,7 @@ const StudentDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user, logout, token } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [toast, setToast] = useState(null);
@@ -108,9 +111,9 @@ const StudentDashboard = () => {
   ];
 
   const Sidebar = () => (
-    <div className="flex h-full flex-col bg-gradient-to-b from-purple-800 to-purple-900 text-white">
+    <div className="flex h-full flex-col bg-gradient-to-b from-purple-800 to-purple-900 dark:from-gray-800 dark:to-gray-900 text-white">
       <div className="flex h-20 items-center justify-between px-6">
-        <h1 className="text-2xl font-bold tracking-wider">Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-wider dark:text-white">Dashboard</h1>
         <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-purple-200 hover:text-white">
           <XIcon className="h-6 w-6" />
         </button>
@@ -155,7 +158,7 @@ const StudentDashboard = () => {
   const handleBackToDashboard = () => setView('dashboard');
 
   return (
-    <div className="flex min-h-screen w-full bg-gray-50 font-sans">
+    <div className="flex min-h-screen w-full bg-gray-50 dark:bg-gray-900 font-sans">
       {/* --- Static Sidebar for Desktop --- */}
       <aside className="hidden w-64 flex-shrink-0 lg:block">
         <Sidebar />
@@ -173,27 +176,40 @@ const StudentDashboard = () => {
 
       {/* --- Main Content --- */}
       <div className="flex flex-1 flex-col">
-        <header className="flex h-20 items-center justify-between border-b bg-white px-4 sm:px-6 lg:px-8">
+        <header className="flex h-20 items-center justify-between border-b bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-gray-600 hover:text-gray-900 lg:hidden"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white lg:hidden"
             >
               <MenuIcon className="h-6 w-6" />
               <span className="sr-only">Open sidebar</span>
             </button>
             <div className="flex items-center gap-3">
-              <span className="text-lg font-medium text-gray-700">Welcome, {user?.username || "Student"}!</span>
+              <span className="text-lg font-medium text-gray-700 dark:text-gray-200">Welcome, {user?.username || "Student"}!</span>
               <img
                 src={user?.profilePictureUrl || "https://placehold.co/40x40/E2E8F0/4A5568?text=S"}
                 alt="User avatar"
-                className="h-10 w-10 rounded-full"
+                className="h-10 w-10 rounded-full border-2 border-gray-300 dark:border-gray-600"
               />
             </div>
           </div>
 
-          {/* Logout Button */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg dark:bg-gray-700 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-yellow-500" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-700" />
+              )}
+            </button>
+
+            {/* Logout Button */}
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors font-medium"
@@ -205,9 +221,9 @@ const StudentDashboard = () => {
         </header>
 
         {/* --- Page Content --- */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-50 dark:bg-gray-900">
           {toast && (
-            <div className="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+            <div className="mb-4 rounded-md border border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/30 px-4 py-3 text-sm text-green-800 dark:text-green-300">
               {toast.message}
             </div>
           )}
@@ -216,9 +232,9 @@ const StudentDashboard = () => {
             <div className="mx-auto max-w-4xl">
               <div className="grid grid-cols-1 gap-8">
                 {/* --- Join New Test --- */}
-                <div className="rounded-xl border bg-white p-6 shadow-sm">
-                  <h2 className="mb-1 text-xl font-semibold text-gray-800">Join New Test</h2>
-                  <p className="mb-6 text-sm text-gray-500">Ready to start? Click below to enter test details.</p>
+                <div className="rounded-xl border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+                  <h2 className="mb-1 text-xl font-semibold text-gray-800 dark:text-white">Join New Test</h2>
+                  <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">Ready to start? Click below to enter test details.</p>
                   <button
                     onClick={handleJoinTest}
                     className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"

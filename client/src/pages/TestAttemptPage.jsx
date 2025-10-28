@@ -139,6 +139,19 @@ export default function TestAttemptPage() {
         let stopped = false;
         const startProctoring = async () => {
             try {
+                // Request camera and microphone permissions before starting
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: true, 
+                        audio: true 
+                    });
+                    // Stop the test stream - we'll start it again in the session
+                    stream.getTracks().forEach(track => track.stop());
+                } catch (permError) {
+                    setError('Camera and microphone permissions are required to take this test. Please grant permissions and reload.');
+                    return;
+                }
+
                 // Optional: verify single display again here
                 try {
                     const single = await ProctoringSession.verifySingleDisplayOrThrow();
@@ -159,8 +172,8 @@ export default function TestAttemptPage() {
                         testId, 
                         stompClient: client,
                         onEvent: (event) => {
-                            if (event.type === 'VISION_SAMPLE') {
-                                setFacesDetected(event.facesDetected);
+                            if (event.type === 'VISION_SAMPLE' || event.type === 'COMPREHENSIVE_ANALYSIS') {
+                                setFacesDetected(event.facesDetected || 0);
                             }
                         }
                     });

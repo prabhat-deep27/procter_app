@@ -1,8 +1,6 @@
-// Enhanced proctoring with advanced TensorFlow.js features
+// Enhanced proctoring with TensorFlow.js
 import * as tf from '@tensorflow/tfjs';
 import * as blazeface from '@tensorflow-models/blazeface';
-import * as handpose from '@tensorflow-models/handpose';
-import * as posenet from '@tensorflow-models/posenet';
 
 const DEFAULT_INTERVAL_MS = 3000;
 const FACE_DETECTION_THRESHOLD = 0.7;
@@ -19,16 +17,13 @@ export class ProctoringSession {
     this.videoEl.playsInline = true;
     this.videoEl.muted = true;
     this.models = {
-      face: null,
-      hand: null,
-      pose: null
+      face: null
     };
     this.timer = null;
     this.proctoringData = {
       facesDetected: 0,
       eyeClosure: 0,
       headTurn: 0,
-      handsDetected: 0,
       suspiciousActivity: []
     };
   }
@@ -67,34 +62,8 @@ export class ProctoringSession {
       if (!this.models.face) {
         this.models.face = await blazeface.load();
       }
-      
-      // Load hand detection model (with error handling for compatibility)
-      if (!this.models.hand) {
-        try {
-          this.models.hand = await handpose.load();
-        } catch (handError) {
-          console.warn('HandPose model failed to load:', handError);
-          this.models.hand = null;
-        }
-      }
-      
-      // Load pose detection model (with error handling for compatibility)
-      if (!this.models.pose) {
-        try {
-          this.models.pose = await posenet.load({
-            architecture: 'MobileNetV1',
-            outputStride: 16,
-            inputResolution: { width: 640, height: 480 },
-            multiplier: 0.75
-          });
-        } catch (poseError) {
-          console.warn('PoseNet model failed to load:', poseError);
-          this.models.pose = null;
-        }
-      }
     } catch (error) {
       console.error('Error loading TensorFlow models:', error);
-      // Don't throw error, continue with basic face detection only
       console.warn('Continuing with basic proctoring (face detection only)');
     }
   }
@@ -123,19 +92,13 @@ export class ProctoringSession {
       canvas.height = this.videoEl.videoHeight || 480;
       ctx.drawImage(this.videoEl, 0, 0);
       
-      // Run all AI analyses in parallel
-      const [faceAnalysis, handAnalysis, poseAnalysis] = await Promise.all([
-        this.analyzeFaces(canvas),
-        this.analyzeHands(canvas),
-        this.analyzePose(canvas)
-      ]);
+      // Run face analysis
+      const faceAnalysis = await this.analyzeFaces(canvas);
       
       // Update proctoring data
       this.proctoringData = {
         ...this.proctoringData,
-        ...faceAnalysis,
-        ...handAnalysis,
-        ...poseAnalysis
+        ...faceAnalysis
       };
       
       // Check for suspicious activities
@@ -190,33 +153,6 @@ export class ProctoringSession {
     }
   }
 
-  async analyzeHands(canvas) {
-    try {
-      if (!this.models.hand) return { handsDetected: 0 };
-      
-      const predictions = await this.models.hand.estimateHands(canvas);
-      const handsDetected = predictions.length;
-      
-      return { handsDetected };
-    } catch (error) {
-      console.warn('Hand analysis failed:', error);
-      return { handsDetected: 0 };
-    }
-  }
-
-  async analyzePose(canvas) {
-    try {
-      if (!this.models.pose) return { poseDetected: false, poseScore: 0 };
-      
-      const pose = await this.models.pose.estimateSinglePose(canvas);
-      const poseDetected = pose.score > 0.3;
-      
-      return { poseDetected, poseScore: pose.score };
-    } catch (error) {
-      console.warn('Pose analysis failed:', error);
-      return { poseDetected: false, poseScore: 0 };
-    }
-  }
 
   calculateEyeClosure(leftEye, rightEye) {
     // Simplified eye closure calculation
@@ -250,11 +186,6 @@ export class ProctoringSession {
     // Check for head turning (looking away)
     if (this.proctoringData.headTurn > HEAD_TURN_THRESHOLD) {
       activities.push('Head turning detected - looking away from screen');
-    }
-    
-    // Check for hand detection (potential phone/notes)
-    if (this.proctoringData.handsDetected > 0) {
-      activities.push('Hands detected near face - potential phone usage');
     }
     
     this.proctoringData.suspiciousActivity = activities;

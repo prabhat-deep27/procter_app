@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Code, Cpu, Database, Network, Server, Brain, Globe, ShieldCheck, Link as LinkIcon, BarChart2, Bot, Fingerprint } from 'lucide-react';
+import { Book, Code, Cpu, Database, Network, Server, Brain, Globe, ShieldCheck, Link as LinkIcon, BarChart2, Bot, Fingerprint, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -152,6 +152,17 @@ export default function SubjectsPage() {
           <p className="mt-2 text-lg text-gray-500">
             A summary of all tests created across different subjects.
           </p>
+          
+          {/* Create New Test Button */}
+          <div className="mt-6 flex justify-center">
+            <Link
+              to="/teacher/create-test"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg"
+            >
+              <Plus size={20} />
+              Create New Test
+            </Link>
+          </div>
         </div>
 
         {/* Grid of Subject Cards */}

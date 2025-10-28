@@ -17,6 +17,9 @@ public class StudentTestReviewResponse {
     private String performanceLevel;
     private List<QuestionResult> questionResults;
     private TeacherFeedback teacherFeedback;
+    private int rank;
+    private int totalStudents;
+    private double percentile;
     
     public StudentTestReviewResponse() {}
     
@@ -56,6 +59,15 @@ public class StudentTestReviewResponse {
     
     public TeacherFeedback getTeacherFeedback() { return teacherFeedback; }
     public void setTeacherFeedback(TeacherFeedback teacherFeedback) { this.teacherFeedback = teacherFeedback; }
+    
+    public int getRank() { return rank; }
+    public void setRank(int rank) { this.rank = rank; }
+    
+    public int getTotalStudents() { return totalStudents; }
+    public void setTotalStudents(int totalStudents) { this.totalStudents = totalStudents; }
+    
+    public double getPercentile() { return percentile; }
+    public void setPercentile(double percentile) { this.percentile = percentile; }
     
     // Inner classes
     public static class QuestionResult {

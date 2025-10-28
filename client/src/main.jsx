@@ -2,7 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 import App from "./App.jsx";
 import TeacherDashboard from "./Components/TeacherDashboard.jsx";
@@ -22,9 +23,10 @@ import StudentTestReviewPage from "./pages/StudentTestReviewPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* Wrap the entire app in AuthProvider */}
-    <AuthProvider>
-      <Router>
+    {/* Wrap the entire app in AuthProvider and ThemeProvider */}
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
         <Routes>
           {/* Home */}
           <Route path="/" element={<App />} />
@@ -50,7 +52,8 @@ createRoot(document.getElementById("root")).render(
           {/* Optional: 404 Page */}
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
-      </Router>
-    </AuthProvider>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>
 );

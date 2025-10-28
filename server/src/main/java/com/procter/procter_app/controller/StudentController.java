@@ -95,7 +95,84 @@ public class StudentController {
         List<StudentTestReviewResponse.QuestionResult> questionResults = buildQuestionResults(test, attempt);
         response.setQuestionResults(questionResults);
 
+        // Calculate rank
+        int rank = calculateRank(testId, attempt.getScore(), attempt.getCorrectAnswers());
+        response.setRank(rank);
+        
+        // Get total students who completed this test
+        int totalStudents = getTotalStudents(testId);
+        response.setTotalStudents(totalStudents);
+        
+        // Get percentile
+        double percentile = calculatePercentile(testId, attempt.getScore());
+        response.setPercentile(percentile);
+
         return ResponseEntity.ok(response);
+    }
+    
+    private int calculateRank(String testId, int studentScore, int studentCorrect) {
+        // Get all completed attempts for this test
+        List<TestAttempt> allAttempts = testAttemptRepository.findByTestId(testId);
+        allAttempts = allAttempts.stream()
+                .filter(TestAttempt::isCompleted)
+                .collect(Collectors.toList());
+        
+        if (allAttempts.isEmpty()) {
+            return 1;
+        }
+        
+        // Sort attempts by score (descending), then by correct answers
+        allAttempts.sort((a1, a2) -> {
+            int scoreCompare = Integer.compare(a2.getScore(), a1.getScore());
+            if (scoreCompare != 0) return scoreCompare;
+            return Integer.compare(a2.getCorrectAnswers(), a1.getCorrectAnswers());
+        });
+        
+        // Find rank
+        for (int i = 0; i < allAttempts.size(); i++) {
+            TestAttempt attempt = allAttempts.get(i);
+            if (attempt.getScore() == studentScore && attempt.getCorrectAnswers() == studentCorrect) {
+                // Check if there are multiple students with same score at this position
+                int rank = i + 1;
+                // If there are ties, count how many before this student with the same score
+                int tiedCount = 0;
+                for (int j = 0; j < i; j++) {
+                    TestAttempt other = allAttempts.get(j);
+                    if (other.getScore() == studentScore && other.getCorrectAnswers() == studentCorrect) {
+                        tiedCount++;
+                    }
+                }
+                return rank - tiedCount;
+            }
+        }
+        
+        return allAttempts.size() + 1;
+    }
+    
+    private int getTotalStudents(String testId) {
+        List<TestAttempt> attempts = testAttemptRepository.findByTestId(testId);
+        return (int) attempts.stream()
+                .filter(TestAttempt::isCompleted)
+                .count();
+    }
+    
+    private double calculatePercentile(String testId, int studentScore) {
+        List<TestAttempt> allAttempts = testAttemptRepository.findByTestId(testId);
+        allAttempts = allAttempts.stream()
+                .filter(TestAttempt::isCompleted)
+                .collect(Collectors.toList());
+        
+        if (allAttempts.isEmpty()) {
+            return 100.0;
+        }
+        
+        // Count how many students scored less than or equal to this student
+        long studentsWithLowerOrEqualScore = allAttempts.stream()
+                .filter(a -> a.getScore() <= studentScore)
+                .count();
+        
+        // Calculate percentile: (students with lower or equal score / total students) * 100
+        return (studentsWithLowerOrEqualScore * 100.0) / allAttempts.size();
     }
 
     @PreAuthorize("hasRole('STUDENT')")
