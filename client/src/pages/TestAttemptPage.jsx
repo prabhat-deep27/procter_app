@@ -359,7 +359,7 @@ export default function TestAttemptPage() {
                                 <button
                                     disabled={submitting || result}
                                     onClick={handleSubmit}
-                                    className="px-5 py-2 rounded-md bg-purple-600 text-white disabled:opacity-50"
+                                    className="px-5 py-2 rounded-md bg-cyan-600 text-white disabled:opacity-50"
                                 >
                                     {submitting ? 'Submitting...' : 'Submit Test'}
                                 </button>

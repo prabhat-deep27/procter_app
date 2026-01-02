@@ -138,7 +138,7 @@ function LoginForm() {
           Signup
         </button>
         <div
-          className={`absolute top-0 h-full w-1/2 rounded-full bg-gradient-to-r from-purple-400 to-pink-300 transition-all duration-300 ${
+          className={`absolute top-0 h-full w-1/2 rounded-full bg-gradient-to-r from-cyan-400 to-cyan-300 transition-all duration-300 ${
             isLoginMode ? "left-0" : "left-1/2"
           }`}
         ></div>
@@ -153,7 +153,7 @@ function LoginForm() {
             value={username}
             onChange={(e) => setUserName(e.target.value)}
             required
-            className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
+            className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
           />
         )}
 
@@ -163,7 +163,7 @@ function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
+          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
         />
         <input
           type="password"
@@ -171,7 +171,7 @@ function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
+          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
         />
 
         {!isLoginMode && (
@@ -182,14 +182,14 @@ function LoginForm() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
+              className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
             />
 
             <select
               required
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-500 bg-white"
+              className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-gray-500 bg-white"
             >
               <option value="" disabled>
                 Select Role
@@ -205,7 +205,7 @@ function LoginForm() {
 
         {isLoginMode && (
           <div className="text-right">
-            <a href="#" className="text-sm text-purple-600 hover:underline">
+            <a href="#" className="text-sm text-cyan-600 hover:underline">
               Forgot password?
             </a>
           </div>
@@ -213,7 +213,7 @@ function LoginForm() {
 
         <button
           type="submit"
-          className="w-full p-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full text-lg font-semibold hover:opacity-90 transition-opacity"
+          className="w-full p-3 bg-gradient-to-r from-cyan-600 to-cyan-500 text-white rounded-full text-lg font-semibold hover:opacity-90 transition-opacity"
         >
           {isLoginMode ? "Login" : "Signup"}
         </button>
@@ -226,7 +226,7 @@ function LoginForm() {
               e.preventDefault();
               toggleMode();
             }}
-            className="font-medium text-purple-600 hover:underline"
+            className="font-medium text-cyan-600 hover:underline"
           >
             {isLoginMode ? "Signup now" : "Login"}
           </a>

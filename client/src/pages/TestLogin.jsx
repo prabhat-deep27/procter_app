@@ -102,7 +102,7 @@ const TestLogin = ({ onBack }) => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
+                            className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 disabled:opacity-50"
                         >
                             {loading ? 'Joining...' : 'Join & Start Monitoring'}
                         </button>

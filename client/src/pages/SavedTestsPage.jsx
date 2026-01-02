@@ -68,13 +68,13 @@ export default function SavedTestsPage() {
           <h1 className="text-3xl font-bold text-gray-800">Saved Tests</h1>
           <Link
             to="/teacher/create-test"
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+            className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition"
           >
             + Create New Test
           </Link>
         </div>
         <div className="text-center py-10">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-600"></div>
           <p className="mt-2 text-gray-500">Loading tests...</p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function SavedTestsPage() {
           <h1 className="text-3xl font-bold text-gray-800">Saved Tests</h1>
           <Link
             to="/teacher/create-test"
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+            className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition"
           >
             + Create New Test
           </Link>
@@ -113,7 +113,7 @@ export default function SavedTestsPage() {
         <h1 className="text-3xl font-bold text-gray-800">Saved Tests</h1>
         <Link
           to="/teacher/create-test"
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+          className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition"
         >
           + Create New Test
         </Link>
@@ -124,7 +124,7 @@ export default function SavedTestsPage() {
           <p className="text-gray-500">You haven't created any tests yet.</p>
           <Link
             to="/teacher/create-test"
-            className="inline-block mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+            className="inline-block mt-4 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition"
           >
             Create Your First Test
           </Link>
@@ -134,7 +134,7 @@ export default function SavedTestsPage() {
           {tests.map((test) => (
             <div key={test.id} className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
               <div className="flex justify-between items-start mb-2">
-                <h2 className="text-xl font-semibold text-purple-700">{test.title}</h2>
+                <h2 className="text-xl font-semibold text-cyan-700">{test.title}</h2>
                 <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                   {test.joinCode}
                 </span>
@@ -176,7 +176,7 @@ export default function SavedTestsPage() {
                     <span>🔗</span>
                     <span>Share Join Code</span>
                   </button>
-                  <button className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded hover:bg-purple-200 transition flex items-center space-x-1">
+                  <button className="px-3 py-1 bg-cyan-100 text-cyan-700 text-xs rounded hover:bg-cyan-200 transition flex items-center space-x-1">
                     <span>✏️</span>
                     <span>Edit Test</span>
                   </button>

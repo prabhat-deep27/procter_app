@@ -132,7 +132,7 @@ export default function SubjectsPage() {
               <p className="text-red-600 text-lg mb-4">{error}</p>
               <button 
                 onClick={fetchAllSubjectTestCounts}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
               >
                 Retry
               </button>
@@ -157,7 +157,7 @@ export default function SubjectsPage() {
           <div className="mt-6 flex justify-center">
             <Link
               to="/teacher/create-test"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 text-white font-bold rounded-lg hover:bg-cyan-700 transition-colors shadow-md hover:shadow-lg"
             >
               <Plus size={20} />
               Create New Test

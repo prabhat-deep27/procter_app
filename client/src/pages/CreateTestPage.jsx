@@ -140,7 +140,7 @@ export default function CreateTestPage() {
                 </div>
                 <button
                     onClick={handleCreateAnother}
-                    className="mt-6 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity font-bold text-lg"
+                    className="mt-6 w-full bg-gradient-to-r from-cyan-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity font-bold text-lg"
                 >
                     Create Another Test
                 </button>
@@ -150,7 +150,7 @@ export default function CreateTestPage() {
 
     return (
         <div className="p-6 max-w-4xl mx-auto my-8">
-            <h1 className="text-3xl font-bold mb-6 text-center text-purple-700">
+            <h1 className="text-3xl font-bold mb-6 text-center text-cyan-700">
                 Create New Test
             </h1>
 
@@ -248,7 +248,7 @@ export default function CreateTestPage() {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity font-bold text-lg disabled:opacity-50"
+                    className="w-full bg-gradient-to-r from-cyan-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 transition-opacity font-bold text-lg disabled:opacity-50"
                 >
                     {isLoading ? "Creating Test..." : "Create and Save Test"}
                 </button>

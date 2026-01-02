@@ -15,7 +15,7 @@ const TestLogin = ({ onBack }) => {
                 {/* Back Button */}
                 <button 
                     onClick={onBack} 
-                    className="absolute top-4 left-4 flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-purple-700"
+                    className="absolute top-4 left-4 flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-cyan-700"
                 >
                     <ArrowLeftIcon className="h-4 w-4" />
                     Back to Dashboard
@@ -109,7 +109,7 @@ const TestLogin = ({ onBack }) => {
                     <div className="pt-2">
                         <button
                             type="submit"
-                            className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                            className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                             Start Assessment
                         </button>

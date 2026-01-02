@@ -63,7 +63,7 @@ export default function TeacherDashboard() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-gradient-to-br from-purple-100 dark:from-gray-900 dark:via-gray-800 via-pink-50 dark:via-gray-800 to-white dark:to-gray-900 min-h-screen">
+    <div className="flex flex-col lg:flex-row bg-gradient-to-br from-cyan-100 dark:from-gray-900 dark:via-gray-800 via-pink-50 dark:via-gray-800 to-white dark:to-gray-900 min-h-screen">
       <Sidebar />
       <div className="flex flex-col flex-1">
         <div className="flex items-center justify-between bg-white dark:bg-gray-800 shadow p-4 border-b border-gray-200 dark:border-gray-700">
@@ -73,7 +73,7 @@ export default function TeacherDashboard() {
               placeholder="Search saved tests..."
               value={searchQuery}
               onChange={handleSearch}
-              className="w-full max-w-md px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full max-w-md px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
           </div>
           <div className="flex items-center gap-3 ml-4">

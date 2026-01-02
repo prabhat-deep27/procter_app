@@ -47,7 +47,7 @@ const StudentAnalyticsPage = () => {
     const colorClasses = {
       blue: "bg-blue-50 border-blue-200 text-blue-700",
       green: "bg-green-50 border-green-200 text-green-700",
-      purple: "bg-purple-50 border-purple-200 text-purple-700",
+      cyan: "bg-cyan-50 border-cyan-200 text-cyan-700",
       orange: "bg-orange-50 border-orange-200 text-orange-700",
     };
 
@@ -107,8 +107,8 @@ const StudentAnalyticsPage = () => {
             <div className="flex space-x-2 overflow-x-auto">
               {trend.scoresOverTime.slice(-5).map((score, index) => (
                 <div key={index} className="flex-shrink-0 text-center">
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-bold text-purple-700">{score}%</span>
+                  <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-bold text-cyan-700">{score}%</span>
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
                     {trend.timeLabels && trend.timeLabels[index] ? 
@@ -226,7 +226,7 @@ const StudentAnalyticsPage = () => {
     if (!insights) return null;
 
     return (
-      <Card className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+      <Card className="p-6 bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-200">
         <h3 className="text-lg font-semibold mb-4 flex items-center">
           <span className="mr-2">🤖</span>
           AI Insights & Recommendations
@@ -244,7 +244,7 @@ const StudentAnalyticsPage = () => {
               <ul className="space-y-2">
                 {insights.recommendations.map((recommendation, index) => (
                   <li key={index} className="flex items-start space-x-2 text-sm">
-                    <span className="text-purple-600 mt-1">•</span>
+                    <span className="text-cyan-600 mt-1">•</span>
                     <span className="text-gray-700">{recommendation}</span>
                   </li>
                 ))}
@@ -284,7 +284,7 @@ const StudentAnalyticsPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
@@ -304,7 +304,7 @@ const StudentAnalyticsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-pink-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -352,7 +352,7 @@ const StudentAnalyticsPage = () => {
               </select>
             </div>
             <div className="flex items-end">
-              <Button onClick={fetchAnalytics} className="bg-purple-600 hover:bg-purple-700">
+              <Button onClick={fetchAnalytics} className="bg-cyan-600 hover:bg-cyan-700">
                 Refresh Data
               </Button>
             </div>
@@ -381,7 +381,7 @@ const StudentAnalyticsPage = () => {
                 title="Performance Trend"
                 value={analytics.performanceTrend?.trend || 'Stable'}
                 subtitle={`${analytics.performanceTrend?.trendPercentage?.toFixed(1) || 0}% change`}
-                color="purple"
+                color="cyan"
                 icon="📈"
               />
               <StatCard

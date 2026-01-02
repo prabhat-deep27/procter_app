@@ -104,7 +104,7 @@ const QuestionAnalysis = ({ questionAnalysis }) => {
             onClick={() => setActiveView(view.id)}
             className={`px-4 py-2 rounded-lg font-medium text-sm flex items-center space-x-2 transition-colors ${
               activeView === view.id
-                ? 'bg-purple-100 text-purple-700 border border-purple-200'
+                ? 'bg-cyan-100 text-cyan-700 border border-cyan-200'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >

@@ -28,11 +28,11 @@ const AIReportPanel = ({ aiReport }) => {
       green: 'bg-green-50 border-green-200',
       yellow: 'bg-yellow-50 border-yellow-200',
       red: 'bg-red-50 border-red-200',
-      purple: 'bg-purple-50 border-purple-200',
+      cyan: 'bg-cyan-50 border-cyan-200',
     };
 
     return (
-      <Card className={`p-6 ${colorClasses[color]} ${expandedSection === sectionId ? 'ring-2 ring-purple-300' : ''}`}>
+      <Card className={`p-6 ${colorClasses[color]} ${expandedSection === sectionId ? 'ring-2 ring-cyan-300' : ''}`}>
         <button
           onClick={() => setExpandedSection(expandedSection === sectionId ? null : sectionId)}
           className="w-full text-left"
@@ -83,20 +83,20 @@ const AIReportPanel = ({ aiReport }) => {
   return (
     <div className="space-y-6">
       {/* AI Report Header */}
-      <Card className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+      <Card className="p-6 bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-200">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-purple-800 flex items-center">
+            <h2 className="text-2xl font-bold text-cyan-800 flex items-center">
               <span className="mr-3">🤖</span>
               AI-Generated Test Analysis Report
             </h2>
-            <p className="text-purple-600 mt-2">
+            <p className="text-cyan-600 mt-2">
               Comprehensive analysis powered by artificial intelligence to help improve teaching and learning outcomes.
             </p>
           </div>
           <div className="text-right">
-            <div className="text-sm text-purple-600">Generated on</div>
-            <div className="font-semibold text-purple-800">
+            <div className="text-sm text-cyan-600">Generated on</div>
+            <div className="font-semibold text-cyan-800">
               {new Date().toLocaleDateString()}
             </div>
           </div>
@@ -111,7 +111,7 @@ const AIReportPanel = ({ aiReport }) => {
             onClick={() => setExpandedSection(section.id)}
             className={`px-4 py-2 rounded-lg font-medium text-sm flex items-center space-x-2 transition-colors ${
               expandedSection === section.id
-                ? 'bg-purple-100 text-purple-700 border border-purple-200'
+                ? 'bg-cyan-100 text-cyan-700 border border-cyan-200'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
@@ -144,12 +144,12 @@ const AIReportPanel = ({ aiReport }) => {
       </SectionCard>
 
       {/* Recommendations */}
-      <SectionCard sectionId="recommendations" title="Recommendations" color="purple">
+      <SectionCard sectionId="recommendations" title="Recommendations" color="cyan">
         <div className="space-y-4">
           {aiReport.recommendations?.map((recommendation, index) => (
             <div key={index} className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
-                <span className="text-xs font-bold text-purple-600">{index + 1}</span>
+              <div className="flex-shrink-0 w-6 h-6 bg-cyan-100 rounded-full flex items-center justify-center">
+                <span className="text-xs font-bold text-cyan-600">{index + 1}</span>
               </div>
               <div className="flex-1">
                 <p className="text-gray-700">{recommendation}</p>
@@ -209,7 +209,7 @@ const AIReportPanel = ({ aiReport }) => {
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-4 pt-6">
-        <Button className="bg-purple-600 hover:bg-purple-700 flex items-center space-x-2">
+        <Button className="bg-cyan-600 hover:bg-cyan-700 flex items-center space-x-2">
           <span>📧</span>
           <span>Share Report</span>
         </Button>

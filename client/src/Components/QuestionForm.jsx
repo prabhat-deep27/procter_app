@@ -137,10 +137,10 @@ const QuestionForm = ({ onQuestionsChange }) => {
 
     // JSX remains unchanged
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-700 p-4">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-cyan-600 to-cyan-700 p-4">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 rounded-t-3xl text-center">
+                <div className="bg-gradient-to-r from-indigo-600 to-cyan-600 text-white p-8 rounded-t-3xl text-center">
                     <h1 className="text-4xl font-bold mb-3">📚 Question Creator</h1>
                     <p className="text-lg opacity-90">Create engaging questions for your students with multiple question types</p>
                 </div>
@@ -155,7 +155,7 @@ const QuestionForm = ({ onQuestionsChange }) => {
                                 onClick={() => setQuestionType('MCQ')}
                                 className={`cursor-pointer p-6 rounded-2xl text-center transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
                                     questionType === 'MCQ' 
-                                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg' 
+                                        ? 'bg-gradient-to-br from-indigo-600 to-cyan-600 text-white shadow-lg' 
                                         : 'bg-white border-2 border-gray-200 hover:border-indigo-300'
                                 }`}
                             >
@@ -171,7 +171,7 @@ const QuestionForm = ({ onQuestionsChange }) => {
                                 onClick={() => setQuestionType('MSQ')}
                                 className={`cursor-pointer p-6 rounded-2xl text-center transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
                                     questionType === 'MSQ' 
-                                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg' 
+                                        ? 'bg-gradient-to-br from-indigo-600 to-cyan-600 text-white shadow-lg' 
                                         : 'bg-white border-2 border-gray-200 hover:border-indigo-300'
                                 }`}
                             >
@@ -187,7 +187,7 @@ const QuestionForm = ({ onQuestionsChange }) => {
                                 onClick={() => setQuestionType('Theory')}
                                 className={`cursor-pointer p-6 rounded-2xl text-center transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
                                     questionType === 'Theory' 
-                                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg' 
+                                        ? 'bg-gradient-to-br from-indigo-600 to-cyan-600 text-white shadow-lg' 
                                         : 'bg-white border-2 border-gray-200 hover:border-indigo-300'
                                 }`}
                             >
@@ -204,7 +204,7 @@ const QuestionForm = ({ onQuestionsChange }) => {
                             <button 
                                 type="button"
                                 onClick={handleAddQuestion}
-                                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold"
+                                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-xl hover:from-indigo-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold"
                             >
                                 ➕ Add Question
                             </button>

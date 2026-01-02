@@ -13,7 +13,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="flex flex-col w-64 bg-purple-700 text-white p-4">
+    <div className="flex flex-col w-64 bg-cyan-600 text-white p-4">
       <h1 className="text-2xl font-bold mb-8">Dashboard</h1>
       <nav>
         <ul>
@@ -23,8 +23,8 @@ export default function Sidebar() {
                 to={item.path}
                 className={`flex items-center gap-3 p-2 rounded-md transition-colors ${
                   location.pathname === item.path
-                    ? "bg-purple-900"
-                    : "hover:bg-purple-600"
+                    ? "bg-cyan-900"
+                    : "hover:bg-cyan-600"
                 }`}
               >
                 {item.icon}

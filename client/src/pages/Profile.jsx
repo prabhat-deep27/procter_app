@@ -181,7 +181,7 @@ export default function ProfilePage() {
               `https://placehold.co/128x128/E9D5FF/4C1D95?text=${username.charAt(0) || 'U'}`
             }
             alt="Profile Preview"
-            className="w-32 h-32 rounded-full object-cover border-4 border-purple-200 shadow-md"
+            className="w-32 h-32 rounded-full object-cover border-4 border-cyan-200 shadow-md"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = `https://placehold.co/128x128/E9D5FF/4C1D95?text=${username.charAt(0) || 'U'}`;
@@ -210,7 +210,7 @@ export default function ProfilePage() {
             <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
-              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -223,7 +223,7 @@ export default function ProfilePage() {
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="email"
-              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -236,7 +236,7 @@ export default function ProfilePage() {
             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="tel"
-              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -248,7 +248,7 @@ export default function ProfilePage() {
           <div className="relative">
             <Building className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <select
-              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none bg-white"
+              className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition appearance-none bg-white"
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
             >
@@ -267,7 +267,7 @@ export default function ProfilePage() {
           <button
             onClick={handleSave}
             disabled={loading}
-            className="w-full max-w-xs bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+            className="w-full max-w-xs bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-300 transition-all duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
           >
             {loading ? "Saving..." : "Save Changes"}
           </button>

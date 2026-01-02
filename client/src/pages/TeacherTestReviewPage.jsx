@@ -69,7 +69,7 @@ const TeacherTestReviewPage = () => {
     const colorClasses = {
       blue: "bg-blue-50 border-blue-200 text-blue-700",
       green: "bg-green-50 border-green-200 text-green-700",
-      purple: "bg-purple-50 border-purple-200 text-purple-700",
+      cyan: "bg-cyan-50 border-cyan-200 text-cyan-700",
       orange: "bg-orange-50 border-orange-200 text-orange-700",
       red: "bg-red-50 border-red-200 text-red-700",
     };
@@ -138,7 +138,7 @@ const TeacherTestReviewPage = () => {
             title="Pass Rate"
             value={`${analytics.statistics?.passRate?.toFixed(1) || 0}%`}
             subtitle="Students passed"
-            color="purple"
+            color="cyan"
             icon="✅"
           />
           <StatCard
@@ -228,8 +228,8 @@ const TeacherTestReviewPage = () => {
                 <tr key={result.studentId} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
-                        <span className="text-sm font-medium text-purple-700">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-cyan-100 flex items-center justify-center">
+                        <span className="text-sm font-medium text-cyan-700">
                           {result.studentName?.charAt(0)?.toUpperCase() || '?'}
                         </span>
                       </div>
@@ -281,7 +281,7 @@ const TeacherTestReviewPage = () => {
 
     return (
       <div className="space-y-6">
-        <Card className="p-6 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+        <Card className="p-6 bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-200">
           <h3 className="text-lg font-semibold mb-4 flex items-center">
             <span className="mr-2">🤖</span>
             AI-Generated Test Analysis
@@ -337,7 +337,7 @@ const TeacherTestReviewPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
@@ -357,7 +357,7 @@ const TeacherTestReviewPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-pink-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -381,7 +381,7 @@ const TeacherTestReviewPage = () => {
                     onClick={() => handleTestSelect(test)}
                     className={`w-full text-left p-3 rounded-lg border transition-colors ${
                       selectedTest?.id === test.id
-                        ? 'bg-purple-100 border-purple-300 text-purple-800'
+                        ? 'bg-cyan-100 border-cyan-300 text-cyan-800'
                         : 'bg-white border-gray-200 hover:bg-gray-50'
                     }`}
                   >
@@ -412,7 +412,7 @@ const TeacherTestReviewPage = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-gray-500">Join Code</div>
-                      <div className="font-mono text-lg font-bold text-purple-600">
+                      <div className="font-mono text-lg font-bold text-cyan-600">
                         {selectedTest.joinCode}
                       </div>
                     </div>
@@ -431,7 +431,7 @@ const TeacherTestReviewPage = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-white text-purple-600 shadow-sm'
+                          ? 'bg-white text-cyan-600 shadow-sm'
                           : 'text-gray-600 hover:text-gray-900'
                       }`}
                     >

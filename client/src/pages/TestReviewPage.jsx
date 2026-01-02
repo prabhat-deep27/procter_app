@@ -60,7 +60,7 @@ const TestReviewPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
@@ -101,7 +101,7 @@ const TestReviewPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-pink-50 to-white">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,7 +134,7 @@ const TestReviewPage = () => {
               </Button>
               <Button
                 onClick={handleSendFeedback}
-                className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700"
+                className="flex items-center space-x-2 bg-cyan-600 hover:bg-cyan-700"
               >
                 <span>💬</span>
                 <span>Send Feedback</span>
@@ -154,7 +154,7 @@ const TestReviewPage = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors ${
                   activeTab === tab.id
-                    ? 'border-purple-500 text-purple-600'
+                    ? 'border-cyan-500 text-cyan-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >

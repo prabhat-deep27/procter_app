@@ -111,10 +111,10 @@ const StudentDashboard = () => {
   ];
 
   const Sidebar = () => (
-    <div className="flex h-full flex-col bg-gradient-to-b from-purple-800 to-purple-900 dark:from-gray-800 dark:to-gray-900 text-white">
+    <div className="flex h-full flex-col bg-gradient-to-b from-cyan-800 to-cyan-900 dark:from-gray-800 dark:to-gray-900 text-white">
       <div className="flex h-20 items-center justify-between px-6">
         <h1 className="text-2xl font-bold tracking-wider dark:text-white">Dashboard</h1>
-        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-purple-200 hover:text-white">
+        <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-cyan-200 hover:text-white">
           <XIcon className="h-6 w-6" />
         </button>
       </div>
@@ -129,7 +129,7 @@ const StudentDashboard = () => {
               // "Results" logic has been removed
               else if (item.name === 'Analytics') navigate('/student/analytics');
             }}
-            className={`flex items-center gap-4 rounded-lg px-4 py-3 text-purple-200 transition-colors hover:bg-white/10 hover:text-white w-full text-left ${
+            className={`flex items-center gap-4 rounded-lg px-4 py-3 text-cyan-200 transition-colors hover:bg-white/10 hover:text-white w-full text-left ${
               (item.name === 'Home' && view === 'dashboard') ||
               (item.name === 'Profile' && view === 'profile') ||
               (item.name === 'My Courses' && view === 'courses')
@@ -237,7 +237,7 @@ const StudentDashboard = () => {
                   <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">Ready to start? Click below to enter test details.</p>
                   <button
                     onClick={handleJoinTest}
-                    className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                    className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                   >
                     Join Test
                   </button>
@@ -269,7 +269,7 @@ const StudentDashboard = () => {
                             </p>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="font-bold text-lg text-purple-700">{test.score}%</span>
+                            <span className="font-bold text-lg text-cyan-700">{test.score}%</span>
                             <button 
                               onClick={() => navigate(`/student/test/${test.id}/review`)}
                               className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

@@ -36,7 +36,7 @@ export default function StudentCourses() {
             className="bg-white border rounded-xl shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-200"
           >
             <div className="flex items-center gap-3 mb-3">
-              <BookOpen className="w-6 h-6 text-purple-600" />
+              <BookOpen className="w-6 h-6 text-cyan-600" />
               <h2 className="text-lg font-semibold text-gray-800">
                 {subject.name}
               </h2>
@@ -61,7 +61,7 @@ export default function StudentCourses() {
             <div className="mt-4">
               <button
                 onClick={() => window.open(subject.link, "_blank")}
-                className="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
+                className="w-full bg-cyan-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-cyan-700 transition-colors"
               >
                 Learn
               </button>

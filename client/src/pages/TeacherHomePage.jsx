@@ -19,7 +19,7 @@ const TeacherHomePage = () => {
           
           {/* This is the new button you wanted to add */}
           <Link to="/teacher/create-test" className="w-full mt-4">
-            <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3">
+            <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3">
               + Create New Test
             </Button>
           </Link>

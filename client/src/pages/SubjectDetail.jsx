@@ -102,7 +102,7 @@ export default function SubjectDetail() {
               <p className="text-red-600 text-lg mb-4">{error}</p>
               <button 
                 onClick={fetchSubjectTests}
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
               >
                 Retry
               </button>
@@ -137,7 +137,7 @@ export default function SubjectDetail() {
             {user?.role === 'TEACHER' && (
               <button
                 onClick={handleCreateTest}
-                className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
               >
                 <Plus size={20} className="mr-2" />
                 Create New Test
@@ -183,7 +183,7 @@ export default function SubjectDetail() {
                   
                   {user?.role === 'TEACHER' && test.createdByTeacherId === user.id && (
                     <div className="mt-3">
-                      <button className="w-full text-sm bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors">
+                      <button className="w-full text-sm bg-cyan-600 text-white py-2 px-4 rounded-lg hover:bg-cyan-700 transition-colors">
                         Manage Test
                       </button>
                     </div>
@@ -202,7 +202,7 @@ export default function SubjectDetail() {
             {user?.role === 'TEACHER' && (
               <button
                 onClick={handleCreateTest}
-                className="flex items-center mx-auto px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center mx-auto px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
               >
                 <Plus size={20} className="mr-2" />
                 Create First Test
