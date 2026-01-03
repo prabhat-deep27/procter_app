@@ -3,16 +3,14 @@ package com.procter.procter_app.config;
 import com.procter.procter_app.model.User;
 import com.procter.procter_app.repo.UserRepository;
 import com.procter.procter_app.service.JwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,60 +29,73 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
-        // Skip if already authenticated
-        Authentication existing = SecurityContextHolder.getContext().getAuthentication();
+        final String authHeader = request.getHeader("Authorization");
 
-        String header = request.getHeader("Authorization");
-        System.out.println("JwtAuthFilter - Authorization header: " + header);
-        if (existing == null && StringUtils.hasText(header) && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            System.out.println("JwtAuthFilter - Token: " + token.substring(0, Math.min(20, token.length())) + "...");
-            try {
-                Jws<Claims> jws = jwtService.parse(token);
-                String email = jws.getBody().getSubject();
-                System.out.println("JwtAuthFilter - Parsed email: " + email);
-
-                Optional<User> userOpt = userRepository.findByEmail(email);
-                if (userOpt.isPresent()) {
-                    User user = userOpt.get();
-                    System.out.println("JwtAuthFilter - User found: " + user.getEmail() + " Role: " + user.getRole());
-
-                    // Build authorities with ROLE_ prefix
-                    SimpleGrantedAuthority authority =
-                            new SimpleGrantedAuthority("ROLE_" + user.getRole().name());
-                    System.out.println("JwtAuthFilter - Authority: " + authority.getAuthority());
-
-                    AbstractAuthenticationToken authentication =
-                            new AbstractAuthenticationToken(List.of(authority)) {
-                                @Override
-                                public Object getCredentials() {
-                                    return token;
-                                }
-
-                                @Override
-                                public Object getPrincipal() {
-                                    return user;
-                                }
-                            };
-                    authentication.setAuthenticated(true);
-
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                    System.out.println("JwtAuthFilter - Authentication set successfully");
-                } else {
-                    System.out.println("JwtAuthFilter - User not found for email: " + email);
-                }
-            } catch (Exception e) {
-                System.out.println("JwtAuthFilter - JWT parsing failed: " + e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("JwtAuthFilter - No valid Authorization header found");
+        // 1. Skip if no Bearer token
+        if (!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        chain.doFilter(request, response);
+        final String token = authHeader.substring(7);
+        final String email;
+
+        try {
+            email = jwtService.extractUsername(token);
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // 2. Proceed only if email is present and not already authenticated
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            Optional<User> userOpt = userRepository.findByEmail(email);
+            if (userOpt.isEmpty()) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            User user = userOpt.get();
+
+            // 3. Validate token against database user
+            if (!jwtService.isTokenValid(token, user)) {
+                SecurityContextHolder.clearContext();
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            /*
+               🔹 FIX: Use exact Authority name (e.g., "STUDENT")
+               We do NOT use "ROLE_" prefix because SecurityConfig is now
+               using .hasAuthority("STUDENT")
+            */
+            String roleName = user.getRole().name().toUpperCase();
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().name());
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            user, // Principal: The full User object for @AuthenticationPrincipal
+                            null, // Credentials
+                            List.of(authority) // Authorities
+                    );
+
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // SERVER-SIDE DEBUG LOGS
+            System.out.println("✅ JWT AUTH SUCCESSFUL");
+            System.out.println("   📧 Email: " + user.getEmail());
+            System.out.println("   🔑 Authority Granted: " + authority.getAuthority());
+        }
+
+        filterChain.doFilter(request, response);
     }
 }

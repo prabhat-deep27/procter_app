@@ -11,18 +11,33 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Bean
+    // 🔹 Explicitly name the bean so SecurityConfig can find it using @Qualifier
+    @Bean(name = "corsConfigurationSource")
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
+
+        // Allow your React Vite frontend
         cfg.setAllowedOrigins(List.of("http://localhost:5173"));
-        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Authorization","Content-Type","Origin","Accept"));
+
+        // Standard HTTP methods allowed for your 2026 API
+        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+
+        // Essential headers for JWT authentication and JSON requests
+        cfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Origin", "Accept"));
+
+        // Allow the browser to read the Authorization header from responses
         cfg.setExposedHeaders(List.of("Authorization"));
+
+        // Required for HttpOnly cookies or specific authenticated cross-origin requests
         cfg.setAllowCredentials(true);
+
+        // Cache preflight (OPTIONS) response for 1 hour
         cfg.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Apply this configuration to all endpoints
         source.registerCorsConfiguration("/**", cfg);
+
         return source;
     }
 }

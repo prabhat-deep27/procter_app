@@ -11,6 +11,7 @@ const TeacherTestReviewPage = () => {
   const [selectedTest, setSelectedTest] = useState(null);
   const [testAnalytics, setTestAnalytics] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false);
 
   useEffect(() => {
     fetchTests();
@@ -41,6 +42,8 @@ const TeacherTestReviewPage = () => {
 
   const fetchTestAnalytics = async (testId) => {
     try {
+      setLoadingAnalytics(true);
+      setTestAnalytics(null); // Reset analytics when fetching new test
       const response = await fetch(`/api/analytics/test/${testId}/review?includeAIReport=true`, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -49,13 +52,22 @@ const TeacherTestReviewPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch test analytics');
+        const errorText = await response.text();
+        console.error('Failed to fetch test analytics:', response.status, errorText);
+        throw new Error(`Failed to fetch test analytics: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Test analytics data:', data);
+      console.log('Student results:', data.studentResults);
+      console.log('AI Report:', data.aiReport);
+      console.log('Statistics:', data.statistics);
       setTestAnalytics(data);
     } catch (err) {
       console.error('Error fetching test analytics:', err);
+      setError(err.message);
+    } finally {
+      setLoadingAnalytics(false);
     }
   };
 
@@ -91,7 +103,16 @@ const TeacherTestReviewPage = () => {
   };
 
   const TestOverview = ({ test, analytics }) => {
-    if (!analytics) return <div>Loading analytics...</div>;
+    if (!analytics) {
+      return (
+        <Card className="p-6">
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+            <p className="text-gray-500">Loading analytics...</p>
+          </div>
+        </Card>
+      );
+    }
 
     return (
       <div className="space-y-6">
@@ -194,7 +215,33 @@ const TeacherTestReviewPage = () => {
   };
 
   const StudentResults = ({ analytics }) => {
-    if (!analytics?.studentResults) return <div>No student results available</div>;
+    console.log('StudentResults component - analytics:', analytics);
+    
+    if (!analytics) {
+      return (
+        <Card className="p-6">
+          <div className="text-center py-8">
+            <p className="text-gray-500">Loading student results...</p>
+          </div>
+        </Card>
+      );
+    }
+    
+    const studentResults = analytics.studentResults || [];
+    console.log('Student results array:', studentResults);
+    console.log('Student results length:', studentResults.length);
+    
+    if (studentResults.length === 0) {
+      return (
+        <Card className="p-6">
+          <div className="text-center py-8">
+            <p className="text-gray-500">No student results available</p>
+            <p className="text-sm text-gray-400 mt-2">Students need to complete the test to see results here.</p>
+            <p className="text-xs text-gray-400 mt-2">Debug: Analytics object keys: {Object.keys(analytics).join(', ')}</p>
+          </div>
+        </Card>
+      );
+    }
 
     return (
       <Card className="p-6">
@@ -224,7 +271,7 @@ const TeacherTestReviewPage = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {analytics.studentResults.map((result, index) => (
+              {studentResults.map((result, index) => (
                 <tr key={result.studentId} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -277,7 +324,32 @@ const TeacherTestReviewPage = () => {
   };
 
   const AIInsights = ({ analytics }) => {
-    if (!analytics?.aiReport) return <div>No AI insights available</div>;
+    console.log('AIInsights component - analytics:', analytics);
+    
+    if (!analytics) {
+      return (
+        <Card className="p-6">
+          <div className="text-center py-8">
+            <p className="text-gray-500">Loading AI insights...</p>
+          </div>
+        </Card>
+      );
+    }
+    
+    const aiReport = analytics.aiReport;
+    console.log('AI Report:', aiReport);
+    
+    if (!aiReport) {
+      return (
+        <Card className="p-6">
+          <div className="text-center py-8">
+            <p className="text-gray-500">No AI insights available</p>
+            <p className="text-sm text-gray-400 mt-2">AI insights will be generated once students complete the test.</p>
+            <p className="text-xs text-gray-400 mt-2">Debug: Analytics object keys: {Object.keys(analytics).join(', ')}</p>
+          </div>
+        </Card>
+      );
+    }
 
     return (
       <div className="space-y-6">
@@ -286,14 +358,14 @@ const TeacherTestReviewPage = () => {
             <span className="mr-2">🤖</span>
             AI-Generated Test Analysis
           </h3>
-          <p className="text-gray-700 mb-4">{analytics.aiReport.summary}</p>
+          <p className="text-gray-700 mb-4">{aiReport.summary || 'No summary available'}</p>
         </Card>
 
-        {analytics.aiReport.insights && analytics.aiReport.insights.length > 0 && (
+        {aiReport.insights && aiReport.insights.length > 0 && (
           <Card className="p-6">
             <h4 className="font-semibold text-gray-900 mb-3">Key Insights</h4>
             <ul className="space-y-2">
-              {analytics.aiReport.insights.map((insight, index) => (
+              {aiReport.insights.map((insight, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-blue-600 mt-1">•</span>
                   <span className="text-gray-700">{insight}</span>
@@ -303,11 +375,11 @@ const TeacherTestReviewPage = () => {
           </Card>
         )}
 
-        {analytics.aiReport.recommendations && analytics.aiReport.recommendations.length > 0 && (
+        {aiReport.recommendations && aiReport.recommendations.length > 0 && (
           <Card className="p-6">
             <h4 className="font-semibold text-gray-900 mb-3">Recommendations</h4>
             <ul className="space-y-2">
-              {analytics.aiReport.recommendations.map((recommendation, index) => (
+              {aiReport.recommendations.map((recommendation, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-green-600 mt-1">•</span>
                   <span className="text-gray-700">{recommendation}</span>
@@ -317,11 +389,11 @@ const TeacherTestReviewPage = () => {
           </Card>
         )}
 
-        {analytics.aiReport.areasOfConcern && analytics.aiReport.areasOfConcern.length > 0 && (
+        {aiReport.areasOfConcern && aiReport.areasOfConcern.length > 0 && (
           <Card className="p-6 bg-red-50 border-red-200">
             <h4 className="font-semibold text-red-900 mb-3">Areas of Concern</h4>
             <ul className="space-y-2">
-              {analytics.aiReport.areasOfConcern.map((concern, index) => (
+              {aiReport.areasOfConcern.map((concern, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-red-600 mt-1">⚠️</span>
                   <span className="text-red-700">{concern}</span>
@@ -442,14 +514,23 @@ const TeacherTestReviewPage = () => {
                 </div>
 
                 {/* Tab Content */}
-                {activeTab === 'overview' && (
-                  <TestOverview test={selectedTest} analytics={testAnalytics} />
-                )}
-                {activeTab === 'students' && (
-                  <StudentResults analytics={testAnalytics} />
-                )}
-                {activeTab === 'ai-insights' && (
-                  <AIInsights analytics={testAnalytics} />
+                {loadingAnalytics ? (
+                  <Card className="p-12 text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading analytics...</p>
+                  </Card>
+                ) : (
+                  <>
+                    {activeTab === 'overview' && (
+                      <TestOverview test={selectedTest} analytics={testAnalytics} />
+                    )}
+                    {activeTab === 'students' && (
+                      <StudentResults analytics={testAnalytics} />
+                    )}
+                    {activeTab === 'ai-insights' && (
+                      <AIInsights analytics={testAnalytics} />
+                    )}
+                  </>
                 )}
               </div>
             ) : (
