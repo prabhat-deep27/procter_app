@@ -50,11 +50,11 @@ const TeacherHomePage = () => {
             </div>
           </Card>
           
-          <Card className="p-6 bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200">
+          <Card className="p-6 bg-gradient-to-r from-cyan-50 to-cyan-100 border-cyan-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-600 text-sm font-medium">Avg Score</p>
-                <p className="text-2xl font-bold text-purple-800">78%</p>
+                <p className="text-cyan-600 text-sm font-medium">Avg Score</p>
+                <p className="text-2xl font-bold text-cyan-800">78%</p>
               </div>
               <div className="text-3xl">📊</div>
             </div>

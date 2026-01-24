@@ -11,7 +11,7 @@ const subjectsConfig = [
   { name: "Networking", icon: <Network size={32} />, color: "bg-yellow-500" },
   { name: "Operating Systems", icon: <Cpu size={32} />, color: "bg-indigo-500" },
   { name: "AI & ML", icon: <Brain size={32} />, color: "bg-pink-500" },
-  { name: "Web Development", icon: <Globe size={32} />, color: "bg-purple-500" },
+  { name: "Web Development", icon: <Globe size={32} />, color: "bg-cyan-500" },
   { name: "App Development", icon: <Bot size={32} />, color: "bg-teal-500" },
   { name: "Cloud Computing & DevOps", icon: <Server size={32} />, color: "bg-cyan-500" },
   { name: "Blockchain & Cryptocurrency", icon: <LinkIcon size={32} />, color: "bg-orange-500" },
@@ -109,7 +109,7 @@ export default function SubjectsPage() {
             </p>
           </div>
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
             <span className="ml-3 text-lg text-gray-600">Loading subjects...</span>
           </div>
         </div>
@@ -177,7 +177,7 @@ export default function SubjectsPage() {
                 {subject.icon}
               </div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">{subject.name}</h3>
-              <p className="text-2xl font-bold text-purple-600">{subject.tests}</p>
+              <p className="text-2xl font-bold text-cyan-600">{subject.tests}</p>
               <p className="text-sm text-gray-500">Tests Created</p>
               {subject.tests > 0 && (
                 <p className="text-xs text-green-600 mt-2 font-medium">Active Subject</p>

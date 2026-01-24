@@ -11,28 +11,20 @@ import AIReportPanel from '../Components/AIReportPanel';
 const TestReviewPage = () => {
   const { testId } = useParams();
   const navigate = useNavigate();
-  const { user, token } = useAuth();
+  const { user } = useAuth();
   const [testReview, setTestReview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
-    if (token && testId) {
-      fetchTestReview();
-    }
-  }, [testId, token]);
+    fetchTestReview();
+  }, [testId]);
 
   const fetchTestReview = async () => {
-    if (!token) {
-      setError('No authentication token found');
-      setLoading(false);
-      return;
-    }
-
     try {
       setLoading(true);
-      setError(null);
+      const token = localStorage.getItem('token');
       const response = await fetch(`/api/analytics/test/${testId}/review?includeAIReport=true`, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -41,16 +33,12 @@ const TestReviewPage = () => {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Failed to fetch test review:', response.status, errorText);
-        throw new Error(`Failed to fetch test review: ${response.status}`);
+        throw new Error('Failed to fetch test review');
       }
 
       const data = await response.json();
-      console.log('Test review data:', data);
       setTestReview(data);
     } catch (err) {
-      console.error('Error fetching test review:', err);
       setError(err.message);
     } finally {
       setLoading(false);

@@ -200,7 +200,7 @@ export default function StudentProfile({ onBack }) {
               {onBack && (
                 <button
                   onClick={onBack}
-                  className="flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors"
+                  className="flex items-center gap-2 text-cyan-600 hover:text-cyan-700 transition-colors"
                 >
                   <ArrowLeft size={20} />
                   <span className="text-sm font-medium">Back to Dashboard</span>
@@ -237,7 +237,7 @@ export default function StudentProfile({ onBack }) {
                   `https://placehold.co/128x128/E9D5FF/4C1D95?text=${username.charAt(0) || 'S'}`
                 }
                 alt="Profile Preview"
-                className="w-32 h-32 rounded-full object-cover border-4 border-purple-200 shadow-md"
+                className="w-32 h-32 rounded-full object-cover border-4 border-cyan-200 shadow-md"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = `https://placehold.co/128x128/E9D5FF/4C1D95?text=${username.charAt(0) || 'S'}`;
@@ -252,7 +252,7 @@ export default function StudentProfile({ onBack }) {
               />
               <button
                 onClick={() => fileInputRef.current.click()}
-                className="flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-lg font-semibold hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-300 transition"
+                className="flex items-center gap-2 bg-cyan-100 text-cyan-700 px-4 py-2 rounded-lg font-semibold hover:bg-cyan-200 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition"
               >
                 <Upload size={18} />
                 Change Photo
@@ -269,7 +269,7 @@ export default function StudentProfile({ onBack }) {
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input
                   type="text"
-                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
                   placeholder="student"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -282,7 +282,7 @@ export default function StudentProfile({ onBack }) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input
                   type="email"
-                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
                   placeholder="yourname@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -295,7 +295,7 @@ export default function StudentProfile({ onBack }) {
                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input
                   type="tel"
-                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition"
                   placeholder="Phone Number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -307,7 +307,7 @@ export default function StudentProfile({ onBack }) {
               <div className="relative">
                 <Building className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <select
-                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition appearance-none bg-white"
+                  className="w-full border border-gray-300 px-3 py-3 pl-10 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition appearance-none bg-white"
                   value={course}
                   onChange={(e) => setCourse(e.target.value)}
                 >
@@ -339,16 +339,16 @@ export default function StudentProfile({ onBack }) {
           {/* Academic Stats */}
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Trophy className="text-purple-600" size={20} />
+              <Trophy className="text-cyan-600" size={20} />
               Academic Performance
             </h3>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-cyan-50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <BookOpen className="text-purple-600" size={18} />
+                  <BookOpen className="text-cyan-600" size={18} />
                   <span className="text-sm font-medium text-gray-700">Total Tests</span>
                 </div>
-                <span className="text-lg font-bold text-purple-700">{studentStats.totalTests}</span>
+                <span className="text-lg font-bold text-cyan-700">{studentStats.totalTests}</span>
               </div>
               
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
@@ -381,9 +381,9 @@ export default function StudentProfile({ onBack }) {
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <button className="w-full text-left p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
-                <div className="font-medium text-purple-800">View Test History</div>
-                <div className="text-sm text-purple-600">Review all your completed tests</div>
+              <button className="w-full text-left p-3 bg-cyan-50 rounded-lg hover:bg-cyan-100 transition-colors">
+                <div className="font-medium text-cyan-800">View Test History</div>
+                <div className="text-sm text-cyan-600">Review all your completed tests</div>
               </button>
               
               <button className="w-full text-left p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
@@ -399,7 +399,7 @@ export default function StudentProfile({ onBack }) {
           </div>
 
           {/* Student Badge */}
-          <div className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl shadow-sm p-6 text-white">
+          <div className="bg-gradient-to-r from-cyan-600 to-pink-500 rounded-xl shadow-sm p-6 text-white">
             <div className="text-center">
               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <User size={32} />

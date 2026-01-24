@@ -14,7 +14,7 @@ const TestStatistics = ({ statistics }) => {
     const colorClasses = {
       blue: "bg-blue-50 border-blue-200 text-blue-700",
       green: "bg-green-50 border-green-200 text-green-700",
-      purple: "bg-purple-50 border-purple-200 text-purple-700",
+      cyan: "bg-cyan-50 border-cyan-200 text-cyan-700",
       orange: "bg-orange-50 border-orange-200 text-orange-700",
       red: "bg-red-50 border-red-200 text-red-700",
     };
@@ -74,7 +74,7 @@ const TestStatistics = ({ statistics }) => {
           title="Highest Score"
           value={`${statistics.highestScore || 0}%`}
           subtitle="Top performer"
-          color="purple"
+          color="cyan"
         />
         <StatCard
           title="Lowest Score"
@@ -168,12 +168,12 @@ const TestStatistics = ({ statistics }) => {
             <div className="text-sm text-green-700">Pass Rate</div>
           </div>
           
-          <div className="text-center p-4 bg-purple-50 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">
+          <div className="text-center p-4 bg-cyan-50 rounded-lg">
+            <div className="text-2xl font-bold text-cyan-600">
               {statistics.standardDeviation > 15 ? 'High' : 
                statistics.standardDeviation > 10 ? 'Moderate' : 'Low'}
             </div>
-            <div className="text-sm text-purple-700">Score Variance</div>
+            <div className="text-sm text-cyan-700">Score Variance</div>
           </div>
         </div>
       </Card>

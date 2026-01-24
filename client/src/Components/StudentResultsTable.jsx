@@ -141,8 +141,8 @@ const StudentResultsTable = ({ studentResults }) => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-                          <span className="text-sm font-medium text-purple-700">
+                        <div className="h-10 w-10 rounded-full bg-cyan-100 flex items-center justify-center">
+                          <span className="text-sm font-medium text-cyan-700">
                             {result.studentName?.charAt(0)?.toUpperCase() || '?'}
                           </span>
                         </div>

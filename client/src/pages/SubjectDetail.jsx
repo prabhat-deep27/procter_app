@@ -85,7 +85,7 @@ export default function SubjectDetail() {
       <div className="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div>
             <span className="ml-3 text-lg text-gray-600">Loading tests...</span>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function SubjectDetail() {
         <div className="mb-8">
           <button
             onClick={() => navigate('/teacher/subjects')}
-            className="flex items-center text-purple-600 hover:text-purple-700 mb-4 transition-colors"
+            className="flex items-center text-cyan-600 hover:text-cyan-700 mb-4 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Subjects
@@ -153,7 +153,7 @@ export default function SubjectDetail() {
               <div key={test.id} className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-semibold text-gray-800 line-clamp-2">{test.title}</h3>
-                  <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-cyan-100 text-cyan-800 px-2 py-1 rounded-full">
                     {test.questions?.length || 0} questions
                   </span>
                 </div>

@@ -70,7 +70,7 @@ const TestLogin = ({ onBack }) => {
                 {/* Back Button */}
                 <button 
                     onClick={onBack} 
-                    className="absolute top-4 left-4 flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-purple-700"
+                    className="absolute top-4 left-4 flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-cyan-700"
                 >
                     <ArrowLeftIcon className="h-4 w-4" />
                     Back to Dashboard
@@ -92,7 +92,7 @@ const TestLogin = ({ onBack }) => {
                             value={joinCode}
                             onChange={(e) => setJoinCode(e.target.value)}
                             placeholder="ABC123"
-                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
                         />
                     </div>
 

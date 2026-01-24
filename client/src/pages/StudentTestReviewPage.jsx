@@ -138,7 +138,7 @@ const StudentTestReviewPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
@@ -178,7 +178,7 @@ const StudentTestReviewPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 via-pink-50 dark:via-gray-800 to-white dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 via-pink-50 dark:via-gray-800 to-white dark:to-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,7 +227,7 @@ const StudentTestReviewPage = () => {
               {testReview.rank && (
                 <div className="text-right">
                   <div className="text-sm text-gray-500 dark:text-gray-400">Rank</div>
-                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                  <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
                     #{testReview.rank} / {testReview.totalStudents || 'N/A'}
                   </div>
                   {testReview.percentile && (
@@ -252,7 +252,7 @@ const StudentTestReviewPage = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors ${
                   activeTab === tab.id
-                    ? 'border-purple-500 dark:border-purple-400 text-purple-600 dark:text-purple-400'
+                    ? 'border-cyan-500 dark:border-cyan-400 text-cyan-600 dark:text-cyan-400'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
               >
@@ -285,7 +285,7 @@ const StudentTestReviewPage = () => {
                   <div className="text-sm text-gray-600 dark:text-gray-400">Correct Answers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                  <div className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">
                     {testReview.performanceLevel}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Performance Level</div>

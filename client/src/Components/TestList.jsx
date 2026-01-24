@@ -36,7 +36,7 @@ const TestLogin = ({ onBack }) => {
                             type="text"
                             id="assessmentId"
                             placeholder="e.g. FE-DEV-2023-001"
-                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
                         />
                     </div>
 
@@ -49,7 +49,7 @@ const TestLogin = ({ onBack }) => {
                             type="text"
                             id="fullName"
                             placeholder="John Doe"
-                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
                         />
                     </div>
 
@@ -62,7 +62,7 @@ const TestLogin = ({ onBack }) => {
                             type="email"
                             id="email"
                             placeholder="you@example.com"
-                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
                         />
                     </div>
 
@@ -75,7 +75,7 @@ const TestLogin = ({ onBack }) => {
                             type="tel"
                             id="phone"
                             placeholder="+1 (555) 123-4567"
-                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                            className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
                         />
                     </div>
                     
@@ -84,7 +84,7 @@ const TestLogin = ({ onBack }) => {
                         <label htmlFor="experience" className="mb-1 block text-sm font-medium text-gray-700">
                            Years of Experience
                         </label>
-                        <select id="experience" className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                        <select id="experience" className="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-cyan-500 focus:ring-cyan-500">
                             <option>Select experience</option>
                             <option>0-1 years</option>
                             <option>1-3 years</option>
@@ -98,7 +98,7 @@ const TestLogin = ({ onBack }) => {
                         <input
                             id="terms"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                            className="h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"
                         />
                         <label htmlFor="terms" className="text-sm text-gray-600">
                             I agree to the assessment terms and conditions
