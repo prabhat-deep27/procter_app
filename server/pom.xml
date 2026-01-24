@@ -94,22 +94,14 @@
 	<!-- ✅ EXECUTABLE JAR CONFIG -->
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<!-- Replace with the full package path to your Application class -->
-					<mainClass>com.yourpackage.ProctoringAppApplication</mainClass>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
+
 
 </project>
