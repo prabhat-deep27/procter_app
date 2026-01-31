@@ -7,10 +7,24 @@ import org.springframework.web.socket.config.annotation.*;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*");
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+
+        String[] allowedOrigins = new String[]{
+            "http://localhost:5173",
+            "https://docker-neon.vercel.app",
+            "https://www.docker-neon.vercel.app"
+        };
+
+        // Plain WebSocket
+        registry.addEndpoint("/ws")
+                .setAllowedOriginPatterns(allowedOrigins);
+
+        // SockJS fallback
+        registry.addEndpoint("/ws")
+                .setAllowedOriginPatterns(allowedOrigins)
+                .withSockJS();
     }
 
     @Override
@@ -19,3 +33,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/app");
     }
 }
+

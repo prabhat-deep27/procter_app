@@ -15,10 +15,11 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
 
+        // ✅ Allowed frontend origins
         cfg.setAllowedOrigins(List.of(
-                "http://localhost:5173",              // local Vite
-                "https://docker-neon.vercel.app",     // deployed frontend
-                "https://www.docker-neon.vercel.app"  // optional www
+                "http://localhost:5173",
+                "https://docker-neon.vercel.app",
+                "https://www.docker-neon.vercel.app"
         ));
 
         cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
@@ -28,9 +29,11 @@ public class CorsConfig {
         cfg.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        // REST endpoints
         source.registerCorsConfiguration("/**", cfg);
 
-        // IMPORTANT: Include /ws/** for WebSocket handshake
+        // WebSocket endpoints
         source.registerCorsConfiguration("/ws/**", cfg);
 
         return source;
