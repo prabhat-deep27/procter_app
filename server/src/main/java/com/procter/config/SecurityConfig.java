@@ -29,31 +29,33 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
+                .cors(Customizer.withDefaults()) // use CorsConfig bean
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(b -> b.disable())
                 .formLogin(f -> f.disable())
                 .logout(l -> l.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        // PUBLIC
+                        // PUBLIC endpoints
                         .requestMatchers(
                                 "/api/auth/register",
                                 "/api/auth/login",
                                 "/ws/**"
                         ).permitAll()
 
+                        // Allow all OPTIONS preflight requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // STUDENT
+                        // STUDENT-specific
                         .requestMatchers(HttpMethod.GET, "/api/analytics/my-analytics").hasRole("STUDENT")
 
-                        // AUTH TEST
+                        // Auth test
                         .requestMatchers(HttpMethod.GET, "/api/analytics/test-auth").authenticated()
 
-                        // EVERYTHING ELSE
+                        // Everything else
                         .anyRequest().authenticated()
                 )
+                // JWT filter
                 .addFilterBefore(
                         new com.procter.procter_app.config.JwtAuthFilter(jwtService, userRepository),
                         BasicAuthenticationFilter.class
@@ -67,3 +69,4 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
+

@@ -11,42 +11,27 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Bean(name = "corsConfigurationSource")
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration cfg = new CorsConfiguration();
 
-        // ✅ FRONTEND URLs ONLY
         cfg.setAllowedOrigins(List.of(
                 "http://localhost:5173",              // local Vite
                 "https://docker-neon.vercel.app",     // deployed frontend
-                "https://www.docker-neon.vercel.app"  // optional www version
+                "https://www.docker-neon.vercel.app"  // optional www
         ));
 
-        // ✅ Allowed HTTP methods
-        cfg.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
-        ));
-
-        // ✅ Headers your frontend sends
-        cfg.setAllowedHeaders(List.of(
-                "Authorization",
-                "Content-Type",
-                "Origin",
-                "Accept"
-        ));
-
-        // ✅ Headers browser can read
+        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
+        cfg.setAllowedHeaders(List.of("*"));
         cfg.setExposedHeaders(List.of("Authorization"));
-
-        // ✅ REQUIRED if using JWT / cookies
         cfg.setAllowCredentials(true);
-
         cfg.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cfg);
+
+        // IMPORTANT: Include /ws/** for WebSocket handshake
+        source.registerCorsConfiguration("/ws/**", cfg);
 
         return source;
     }
