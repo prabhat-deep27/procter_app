@@ -55,7 +55,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(
-                        new JwtAuthFilter(jwtService, userRepository),
+                        new com.procter.procter_app.config.JwtAuthFilter(jwtService, userRepository),
                         BasicAuthenticationFilter.class
                 );
 

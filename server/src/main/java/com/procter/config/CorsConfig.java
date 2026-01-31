@@ -17,7 +17,7 @@ public class CorsConfig {
         CorsConfiguration cfg = new CorsConfiguration();
 
         // Allow your React Vite frontend
-        cfg.setAllowedOrigins(List.of("http://localhost:5173"));
+        cfg.setAllowedOrigins(List.of("http://localhost:5173","https://docker-neon.vercel.app/"));
 
         // Standard HTTP methods allowed for your 2026 API
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
