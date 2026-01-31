@@ -11,33 +11,44 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    // 🔹 Explicitly name the bean so SecurityConfig can find it using @Qualifier
     @Bean(name = "corsConfigurationSource")
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration cfg = new CorsConfiguration();
 
-        // Allow your React Vite frontend
-        cfg.setAllowedOrigins(List.of("http://localhost:5173","https://docker-neon.vercel.app"));
+        // ✅ FRONTEND URLs ONLY
+        cfg.setAllowedOrigins(List.of(
+                "http://localhost:5173",              // local Vite
+                "https://docker-neon.vercel.app",     // deployed frontend
+                "https://www.docker-neon.vercel.app"  // optional www version
+        ));
 
-        // Standard HTTP methods allowed for your 2026 API
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        // ✅ Allowed HTTP methods
+        cfg.setAllowedMethods(List.of(
+                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
+        ));
 
-        // Essential headers for JWT authentication and JSON requests
-        cfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Origin", "Accept"));
+        // ✅ Headers your frontend sends
+        cfg.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Origin",
+                "Accept"
+        ));
 
-        // Allow the browser to read the Authorization header from responses
+        // ✅ Headers browser can read
         cfg.setExposedHeaders(List.of("Authorization"));
 
-        // Required for HttpOnly cookies or specific authenticated cross-origin requests
+        // ✅ REQUIRED if using JWT / cookies
         cfg.setAllowCredentials(true);
 
-        // Cache preflight (OPTIONS) response for 1 hour
         cfg.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Apply this configuration to all endpoints
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cfg);
 
         return source;
     }
 }
+
