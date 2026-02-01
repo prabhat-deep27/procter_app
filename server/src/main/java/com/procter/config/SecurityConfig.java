@@ -47,8 +47,12 @@ public class SecurityConfig {
             // ✅ Authorization rules (ORDER MATTERS!)
             .authorizeHttpRequests(auth -> auth
 
-                // 🔥 MUST BE FIRST (browser preflight)
+ 		    
+	      // 🔥 MUST BE FIRST (browser preflight)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
+                // 🔥 Spring error controller (CRITICAL FIX)
+                 .requestMatchers("/error").permitAll()
 
                 // 🔓 Public authentication APIs
                 .requestMatchers("/api/auth/**").permitAll()
