@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; // For token
-import QuestionForm from "../components/QuestionForm";
+import QuestionForm from "../Components/QuestionForm";
 
 // --- Parent Component: CreateTestPage ---
 export default function CreateTestPage() {

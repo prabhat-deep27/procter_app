@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: procter-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - PORT=8080
+    networks:
+      - procter-net
+
+  frontend:
+    container_name: procter-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - procter-net
+
+networks:
+  procter-net:
+    driver: bridge
+
