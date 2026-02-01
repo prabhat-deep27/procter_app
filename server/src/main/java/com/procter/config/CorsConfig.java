@@ -13,28 +13,37 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration cfg = new CorsConfiguration();
 
-        // ✅ Allowed frontend origins
-        cfg.setAllowedOrigins(List.of(
+        CorsConfiguration config = new CorsConfiguration();
+
+        // ✅ EXACT frontend origins (NO trailing slash)
+        config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
-                "https://docker-neon.vercel.app",
-                "https://www.docker-neon.vercel.app"
+                "https://docker-neon.vercel.app"
         ));
 
-        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
-        cfg.setAllowedHeaders(List.of("*"));
-        cfg.setExposedHeaders(List.of("Authorization"));
-        cfg.setAllowCredentials(true);
-        cfg.setMaxAge(3600L);
+        // ✅ Allow all required HTTP methods
+        config.setAllowedMethods(List.of(
+                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
+        ));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // ✅ Allow all headers (important for JWT & preflight)
+        config.setAllowedHeaders(List.of("*"));
 
-        // REST endpoints
-        source.registerCorsConfiguration("/**", cfg);
+        // ✅ Allow browser to read Authorization header
+        config.setExposedHeaders(List.of("Authorization"));
 
-        // WebSocket endpoints
-        source.registerCorsConfiguration("/ws/**", cfg);
+        // ✅ Required when using JWT + cookies / auth
+        config.setAllowCredentials(true);
+
+        // ✅ Cache OPTIONS response
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        // Apply to ALL endpoints including /ws/**
+        source.registerCorsConfiguration("/**", config);
 
         return source;
     }
