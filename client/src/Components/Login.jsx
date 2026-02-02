@@ -17,7 +17,7 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-   //this is Login page
+   //this is Login page after jenkins pipeline
   const resetForm = () => {
     setUserName("");
     setEmail("");
